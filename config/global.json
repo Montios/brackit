@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "_default": {
+            "link": "test_bracketgame"
+        }, 
+        "test_bracketgame": {
+            "applicationId": "WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", 
+            "masterKey": "rqK66sqoIvxYUZM3e0iFQbTp3h7oOChIhTOejUrf"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.1"
+    }
+}
