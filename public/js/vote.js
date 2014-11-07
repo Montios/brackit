@@ -127,23 +127,3 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
 });
 
 
-
-
-
-
-
-[{"round":1,"value":"pizza","votes1":1,"votes2":0},{"round":1,"value":"pasta","votes1":0,"votes2":0},{"round":1,"value":"sandwich","votes1":0,"votes2":0},{"round":1,"value":"burritos","votes1":1,"votes2":0}]
-
-
-
-
-
-
-
-
-
-
-
-
-
-

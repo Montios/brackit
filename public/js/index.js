@@ -82,11 +82,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       }
       });
 
-    });
-
-     
-
-     
+    });  
 });
 
 
