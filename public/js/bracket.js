@@ -5,13 +5,13 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
   var bracket = Parse.Object.extend("Brackets");
   var query = new Parse.Query(bracket);
   query.descending('updatedAt');
-  query.find({
-    success: function(objects) {
-      var bracketData = objects[0].get('bracket_data');
-      var furthest_round = objects[0].get('furthest_round');
-      var totalRounds = objects[0].get("total_rounds");
+  query.first({
+    success: function(object) {
+      var bracketData = object.get('bracket_data');
+      var furthest_round = object.get('furthest_round');
+      var totalRounds = object.get("total_rounds");
       buildBracket(bracketData,totalRounds); 
-      $("#title").append(objects[0].get('category'));
+      $("#title").append(object.get('category'));
     },
     error: function(error) {
       alert("Error: " + error.code + " " + error.message);
@@ -117,6 +117,23 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
 
 
   }
+
+  $( document ).on( "click", ".g_team", function() {
+    console.log($(this).find("h3").clone().children().remove().end().text());
+    var selected = $(this).find("h3").clone().children().remove().end().text().trim();
+    alert("Your choice is \""+selected+"\". Thanks");
+  });
+
+  //redirect to votes page
+  $("#voteButton").on("click", function(){
+    window.location.href = "./vote.html";
+  });
+
+  $("#endRoundButton").on("click", function(){
+    //determine the winner by comparing votes and incrementing the round
+
+  });
+
   // var bracketData = 
   // [
   //   [
@@ -142,11 +159,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
 
 
 
-  $( document ).on( "click", ".g_team", function() {
-    console.log($(this).find("h3").clone().children().remove().end().text());
-    var selected = $(this).find("h3").clone().children().remove().end().text().trim();
-    alert("Your choice is \""+selected+"\". Thanks");
-  });
+
 
 
 

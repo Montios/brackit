@@ -55,7 +55,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       for (var i = 1; i <= input; i++){
         var obj = {};
         obj['value'] = $("#" +i).val();
-        for (var j =0; j < rounds; j++){
+        for (var j =1; j <= rounds; j++){
           obj['votes' + j] = 0;
         }
 
@@ -67,7 +67,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       var Brackets = Parse.Object.extend("Brackets");
       var brackets = new Brackets();
       brackets.set("bracket_data",array);
-      brackets.set("furthest_round", 0);
+      brackets.set("furthest_round", 1);
       brackets.set("total_rounds", rounds+1);
       brackets.save(null, {
       success: function(brackets) {
