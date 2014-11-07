@@ -112,17 +112,44 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       $(".my_gracket").gracket({
         src : bracketData
       });
-
       console.log(JSON.stringify(bracketData));
-
-
   }
 
-  $( document ).on( "click", ".g_team", function() {
-    console.log($(this).find("h3").clone().children().remove().end().text());
-    var selected = $(this).find("h3").clone().children().remove().end().text().trim();
-    alert("Your choice is \""+selected+"\". Thanks");
-  });
+  //function to increment the round based on vote
+  function moveToNextRound(data,totalRounds,currentRound) {
+    console.log("currentRound");
+    console.log(currentRound);
+    var pairCount = 0;
+    for (var i = 0; i<data.length; i++) {
+      var team1_index; 
+      var team2_index; 
+      console.log("objectRound")
+      console.log(data[i]["round"]);
+      if (data[i]["round"] == currentRound) {
+        console.log("equal");
+        if(pairCount==0){
+          console.log("pairCount==0");
+          team1_index = i; 
+          pairCount++;
+        }
+        else if (pairCount ==1){
+          team2_index = i; 
+          if (data[team1_index]["votes" + currentRound]>data[team2_index]["votes" + currentRound]){
+            data[team1_index]["round"]++;
+            console.log(JSON.stringify(data[team1_index]["value"]));
+            console.log(JSON.stringify(data[team1_index]["round"]));
+          }
+          else{
+            data[team2_index]["round"]++;
+            console.log(JSON.stringify(data[team2_index]["value"]));
+            console.log(JSON.stringify(data[team2_index]["round"]));
+          }
+          pairCount=0;
+        }
+      }
+    }
+    return data;
+  }
 
   //redirect to votes page
   $("#voteButton").on("click", function(){
@@ -132,7 +159,40 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
   $("#endRoundButton").on("click", function(){
     //determine the winner by comparing votes and incrementing the round
 
+    //query the team objects
+    var bracket = Parse.Object.extend("Brackets");
+    var query = new Parse.Query(bracket);
+    query.descending('updatedAt');
+    query.first({
+      success: function(object) {
+        var bracketData = object.get('bracket_data');
+        var currentRound = object.get('furthest_round');
+        var totalRounds = object.get("total_rounds");
+        var results = moveToNextRound(bracketData,totalRounds,currentRound); 
+        object.set("bracket_data", results);
+        object.set("furthest_round", currentRound+1);
+        object.save(null, {
+        success: function(savedObject) {
+          // Execute any logic that should take place after the object is saved.
+          console.log(JSON.stringify(savedObject));
+          window.location.href="./bracket.html";
+        },
+        error: function(savedObject, error) {
+          alert('Failed to create new object, with error code: ' + error.message);
+        }
+        });
+      },
+      error: function(error) {
+        alert("Error: " + error.code + " " + error.message);
+      }
+    });
   });
+
+  // $(document).on( "click", ".g_team", function() {
+  //   console.log($(this).find("h3").clone().children().remove().end().text());
+  //   var selected = $(this).find("h3").clone().children().remove().end().text().trim();
+  //   alert("Your choice is \""+selected+"\". Thanks");
+  // });
 
   // var bracketData = 
   // [

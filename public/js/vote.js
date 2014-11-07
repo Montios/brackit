@@ -38,7 +38,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         teams.push(data[i].value);
       }
     }
-    total_count = data.length/2; 
+    total_count = teams.length/2; 
     console.log(total_count);
 
     //display the first two in the buttons
