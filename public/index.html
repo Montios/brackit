@@ -4,24 +4,26 @@
     <title>My ParseApp site</title>
     <style>
     </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js"></script>
 
     <!-- ratchet files --> 
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/ratchet/2.0.2/css/ratchet-theme-ios.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/ratchet/2.0.2/css/ratchet-theme-ios.min.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/ratchet/2.0.2/css/ratchet.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/ratchet/2.0.2/css/ratchet.min.css">
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/ratchet/2.0.2/js/ratchet.js"></script>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/ratchet/2.0.2/js/ratchet.min.js"></script>
-
+        <link rel="stylesheet" href="http://goratchet.com/dist/css/ratchet-theme-ios.min.css">
+        <link rel="stylesheet" href="http://goratchet.com/dist/css/ratchet.min.css">
+        <script src="http://goratchet.com/dist/js/ratchet.min.js"></script>
+      <style type="text/css"></style></head>
     <!-- include the js file --> 
     <script type="text/javascript" src="./js/index.js"></script>
     
   </head>
     <body>
     <header class="bar bar-nav">
-      <h1 class="title">Create a Bracket</h1>
+      <a class="icon icon-refresh pull-right"></a>
+      <h1 class="title">The Bracket Game</h1>
     </header>
     
 
@@ -44,7 +46,7 @@
       <form class="input-group" id="input_fields">
       </form>
 
-      <button  id="createBracket" class="btn btn-primary">Submit</button>
+      <button  style="height:50px;width:80%;margin-left:10%;height:" id="createBracket" class="btn btn-primary">Submit</button>
       
     </div>
 

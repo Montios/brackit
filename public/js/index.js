@@ -34,9 +34,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       for (var i = 1; i<=bracket_size; i++)
       {
         $("#input_fields").append(
-          "<div class='input-row'>" + 
-          "<label>" + i + "</label>" + 
-          "<input id=" + i + " type='text'></div>"
+          "<input id=" + i + " type='text' placeholder='Item "+ i + "'></div>"
           )
       }
     }
