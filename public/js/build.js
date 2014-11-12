@@ -70,10 +70,11 @@ $(document).ready(function() {
         //and build the appropriate # of input fields
         playerCount = object.get('playerCount');
         bracketSize = object.get('bracketSize');
-        console.log("object successfully retrieved");
-        console.log(bracketSize);
+        if(object.get('playerCount')==object.get('player_inputs').length){
+          alert("Players are no longer allowed to add teams!");
+          window.location.href = "./bracket.html";
+        }
         fieldsCount = Math.ceil(bracketSize/(0.75*playerCount));
-        console.log(fieldsCount);
         $('#categoryTitle').append(object.get('category'));
         for (var i = 1; i<=fieldsCount; i++)
         {
