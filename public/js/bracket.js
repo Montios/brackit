@@ -10,7 +10,14 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       var bracketData = object.get('bracket_data');
       var furthest_round = object.get('furthest_round');
       var totalRounds = object.get("total_rounds");
-      buildBracket(bracketData,totalRounds); 
+      //if all players have included some kind of input, build bracket
+      //else, alert the user that other players still need to input
+      if (object.get('player_inputs').length == object.get('playerCount')){
+        buildBracket(bracketData,totalRounds); 
+      }
+      else {
+        alert("Waiting on other players to join...");
+      } 
       $("#title").append(object.get('category'));
     },
     error: function(error) {
@@ -151,6 +158,35 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     return data;
   }
 
+  function changeZoom() {
+    newZoom= parseInt(oSlider.value)
+      oZoom.style.zoom=newZoom+'%';
+      oCode.innerText='zoom: '+newZoom+'%';
+    
+    } 
+    
+  function changeZoom2(oSel) {
+    newZoom= oSel.options[oSel.selectedIndex].innerText
+      oZoom.style.zoom=newZoom;
+    } 
+
+  function changeSize(val){
+    var size = parseInt(val);
+     oZoom.style.zoom=size+'%';
+     $(".ui-slider-handle").attr("title",val+"%");
+  }
+
+  function tempAlert(msg,duration)
+  {
+   var el = document.createElement("div");
+   el.setAttribute("style","position:absolute;top:50%;left:50%; margin: -50px 0 0 -250px;background-color:#F0F0F0; padding: 30px; padding-left: 100px; width:400px; height:100px; border:solid 4px #B0B0B0;border-radius: 25px;");
+   el.innerHTML = msg;
+   setTimeout(function(){
+    el.parentNode.removeChild(el);
+   },duration);
+   document.body.appendChild(el);
+  }
+
   //redirect to votes page
   $("#voteButton").on("click", function(){
     window.location.href = "./vote.html";
@@ -188,11 +224,22 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     });
   });
 
-  // $(document).on( "click", ".g_team", function() {
-  //   console.log($(this).find("h3").clone().children().remove().end().text());
-  //   var selected = $(this).find("h3").clone().children().remove().end().text().trim();
-  //   alert("Your choice is \""+selected+"\". Thanks");
-  // });
+  $( "#slider").on('slidestop', function( event ) {
+     var slider_value=$("#slider").slider().val();
+     changeSize(slider_value);
+  });
+
+  var voteResult = [];
+  $(document).on( "click", ".g_team", function() {
+    console.log($(this).find("h3").clone().children().remove().end().text());
+    var selected = $(this).find("h3").clone().children().remove().end().text().trim();
+    //alert("Your choice is \""+selected+"\". Thanks");
+    $(this).css('background-color', '#FF66FF');
+    $(this).find("h3").css('color', '#ffffff');
+    voteResult.push(selected);
+    tempAlert("Your choice is \""+selected+"\". Thanks",1000);
+    console.log(voteResult);
+  });
 
   // var bracketData = 
   // [

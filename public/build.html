@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html>
   <head>
     <title>My ParseApp site</title>
@@ -12,24 +12,25 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js"></script>
 
     <!-- ratchet files --> 
-        <link rel="stylesheet" href="http://goratchet.com/dist/css/ratchet-theme-ios.min.css">
-        <link rel="stylesheet" href="http://goratchet.com/dist/css/ratchet.min.css">
-        <script src="http://goratchet.com/dist/js/ratchet.min.js"></script>
-      <style type="text/css"></style></head>
+    <link rel="stylesheet" href="./ratchet/css/ratchet.min.css">
+    <link rel="stylesheet" href="./ratchet/css/ratchet-theme-ios.min.css">
+    <script src="./ratchet/js/ratchet.min.js"></script>
 
     <!-- include the js file --> 
-    <script type="text/javascript" src="./js/category.js"></script>
+    <script type="text/javascript" src="./js/build.js"></script>
     
   </head>
     <body>
     <header class="bar bar-nav">
-      <h1 class="title">Select a category</h1>
+      <a class="icon icon-refresh pull-right"></a>
+      <h1 id="categoryTitle" class="title"></h1>
     </header>
+    
+
     <div class="content">
-        <form class="input-group">
-            <input id="category" type="text" placeholder="Select a Category">
-        </form>
-        <button  style="height:50px;width:80%;margin-left:10%;height:" id="addCategory" class="btn btn-primary">Submit</button>
+      <form class="input-group" id="input_fields">
+      </form>
+      <button  style="height:50px;width:80%;margin-left:10%;height:" id="addInputs" class="btn btn-primary">Submit</button>
     </div>
 
   </body>

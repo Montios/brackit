@@ -1,4 +1,4 @@
-<html>
+ <html>
   <head>
     <title>My ParseApp site</title>
     <style>
@@ -11,10 +11,15 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js"></script>
 
     <!-- ratchet files --> 
-        <link rel="stylesheet" href="http://goratchet.com/dist/css/ratchet-theme-ios.min.css">
-        <link rel="stylesheet" href="http://goratchet.com/dist/css/ratchet.min.css">
-        <script src="http://goratchet.com/dist/js/ratchet.min.js"></script>
-      <style type="text/css"></style></head>
+    <link rel="stylesheet" href="./ratchet/css/ratchet.min.css">
+    <link rel="stylesheet" href="./ratchet/css/ratchet-theme-ios.min.css">
+    <script src="./ratchet/js/ratchet.min.js"></script>
+
+    <!--additional jquery files-->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
     <!-- include the js file --> 
     <script type="text/javascript" src="./js/bracket.js"></script>
 
@@ -27,22 +32,36 @@
       .g_gracket { width: 9999px; background-color: #fff; padding: 55px 15px 5px; line-height: 100%; position: relative; overflow: hidden;}
       .g_round { float: left; margin-right: 70px; }
       .g_game { position: relative; margin-bottom: 15px; }
-      .g_gracket h3 { margin: 0; padding: 10px 8px 8px; font-size: 18px; font-weight: normal; color: #fff}
-      .g_team { background: #3597AE; }
-      .g_team:last-child {  background: #FCB821; }
+      .g_gracket h3 { margin: 0; padding: 10px 8px 8px; font-size: 18px; font-weight: normal; color: #000000}
+      .g_team { background: #ffffff; border:solid 2px #99CCFF; border-bottom: solid 1px #99CCFF}
+      .g_team:last-child {  background: #ffffff; border:solid 2px #CCCCFF; border-top: solid 1px #CCCCFF}
       .g_round:last-child { margin-right: 20px; }
-      .g_winner { background: #444; }
+      .g_winner { background:#CCCCFF; border:solid 2px #99CCFF;}
       .g_winner .g_team { background: none; }
-      .g_current { cursor: pointer; background: #A0B43C!important; }
+      .g_current { cursor: pointer; background: #CCFFFF!important; }
       .g_round_label { top: -5px; font-weight: normal; color: #CCC; text-align: center; font-size: 18px; }
+      .1{ background:#CCCCFF!important; }
     </style>
 
   </head>
   <body>
+      <!--<button id="endRoundButton" class="btn btn-primary">Move to next round</button>-->
     <p align="center" style="font-size:20px" id="title"></p>
-    <button id="voteButton" class="btn btn-primary">Vote!</button>
-    <button id="endRoundButton" class="btn btn-primary">Move to next round</button>
-    <div class="my_gracket">
+      
+    
+    <div data-role="fieldcontain" style="width:70%; float:left; margin-left:10px" > 
+      <label for="slider" style="width:12%">Size: %</label>
+      <input type="range" name="slider" id="slider" value="100" min="0" max="500"  step="5" onclick = "changeSize()"  style="width:6%"/>
+    </div>
+     <a href="index.html" data-role="button" data-inline="true" data-theme="c" id="endRoundButton">Move to next round</a>
+
+       
+
+    <div align="center">
+    </div>
+
+    <p align="center" style="font-size:20px" id="title"></p>
+    <div class="my_gracket" id = "oZoom" align = "center">
     </div>
   </body>
 </html>
