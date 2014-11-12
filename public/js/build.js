@@ -79,7 +79,7 @@ $(document).ready(function() {
         {
           //create the appropriate number of input fields based on formula
           $("#input_fields").append(
-            "<input id=" + i + " type='text' placeholder='Item "+ i + "'>"
+            "<input id=" + i + " type='text' placeholder='Rank "+ i + "'>"
             )
         }
       },

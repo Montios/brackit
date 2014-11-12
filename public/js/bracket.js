@@ -146,6 +146,15 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
             console.log(JSON.stringify(data[team1_index]["value"]));
             console.log(JSON.stringify(data[team1_index]["round"]));
           }
+          else if(data[team1_index]["votes" + currentRound]==data[team2_index]["votes" + currentRound]){
+            var randNum = Math.round(Math.random());
+            if(randNum == 1){
+              data[team1_index]["round"]++;
+            }
+            else {
+              data[team2_index]["round"]++;
+            }
+          }
           else{
             data[team2_index]["round"]++;
             console.log(JSON.stringify(data[team2_index]["value"]));
