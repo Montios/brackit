@@ -1,6 +1,6 @@
 $(document).ready(function() {  
  Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD5vtUYRAwTEComMztpJVuTK");
-
+  
   //put functions that should run at load here
   buildInputFields();
 
@@ -59,8 +59,6 @@ $(document).ready(function() {
 
   function buildInputFields()
   {
-    var playerCount;
-    var bracketSize;
     var bracket = Parse.Object.extend("Brackets");
     var query = new Parse.Query(bracket);
     query.descending('createdAt');
@@ -68,9 +66,10 @@ $(document).ready(function() {
       success: function(object) {
         //get the number of players and bracket size
         //and build the appropriate # of input fields
-        playerCount = object.get('playerCount');
-        bracketSize = object.get('bracketSize');
-        if(object.get('playerCount')==object.get('player_inputs').length){
+        var playerCount = object.get('playerCount');
+        var bracketSize = object.get('bracketSize');
+        var inputs = object.get('player_inputs');
+        if(inputs!=undefined && playerCount==inputs.length){
           alert("Players are no longer allowed to add teams!");
           window.location.href = "./bracket.html";
         }
@@ -118,10 +117,5 @@ $(document).ready(function() {
     }
 
     return data;
-  }
-
-
-
-
-     
+  }  
 });
