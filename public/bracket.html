@@ -15,11 +15,6 @@
     <link rel="stylesheet" href="./ratchet/css/ratchet-theme-ios.min.css">
     <script src="./ratchet/js/ratchet.min.js"></script>
 
-    <!--additional jquery files-->
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
     <!-- include the js file --> 
     <script type="text/javascript" src="./js/bracket.js"></script>
 
@@ -40,26 +35,27 @@
       .g_winner .g_team { background: none; }
       .g_current { cursor: pointer; background: #CCFFFF!important; }
       .g_round_label { top: -5px; font-weight: normal; color: #CCC; text-align: center; font-size: 18px; }
-      .1{ background:#CCCCFF!important; }
+      #endRoundButton {
+        height:50px;
+        width:80%;
+        margin-left:10%;
+        margin-top:30px;
+      }
+      #title {
+        margin-top:10px;
+        font-size:30px;
+      }
     </style>
 
   </head>
-  <body>
-      <!--<button id="endRoundButton" class="btn btn-primary">Move to next round</button>-->
-    <p align="center" style="font-size:20px" id="title"></p>
-      
-    
-    <div data-role="fieldcontain" style="width:70%; float:left; margin-left:10px" > 
-      <label for="slider" style="width:12%">Size: %</label>
-      <input type="range" name="slider" id="slider" value="100" min="0" max="500"  step="5" onclick = "changeSize()"  style="width:6%"/>
-    </div>
-    <a href="index.html" data-role="button" data-inline="true" data-theme="c" id="endRoundButton">Move to next round</a>
-    <div align="center">
-    </div>
-    <p align="center" style="font-size:20px" id="title"></p>
+  <body>    
+    <p align="center" id="title"></p>
     <div>
-      <div class="my_gracket" id = "oZoom" align = "center">
+      <div id="buttonLocation">
+      </div>
+      <div class="my_gracket" align = "center">
       </div>
     </div>
+
   </body>
 </html>
