@@ -25,6 +25,41 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       } 
       if(creator==="yes"){
         $("#buttonLocation").append("<button id='endRoundButton' class='btn btn-primary'>Move to next round</button>");
+        $("#endRoundButton").on("click", function(){
+
+          //determine the winner by comparing votes and incrementing the round
+          //query the team objects
+          var bracket = Parse.Object.extend("Brackets");
+          var query = new Parse.Query(bracket);
+          query.get(bid,{
+            success: function(object) {
+              var bracketData = object.get('bracket_data');
+              var currentRound = object.get('furthest_round');
+              var totalRounds = object.get("total_rounds");
+              var results = moveToNextRound(bracketData,totalRounds,currentRound); 
+              object.set("bracket_data", results);
+              object.set("furthest_round", currentRound+1);
+              object.save(null, {
+              success: function(savedObject) {
+                // Execute any logic that should take place after the object is saved.
+                console.log(JSON.stringify(savedObject));
+                if (creator==="yes"){
+                  window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
+                }
+                else {
+                  window.location.href = "./bracket.html?bid="+ bid;
+                }
+              },
+              error: function(savedObject, error) {
+                alert('Failed to create new object, with error code: ' + error.message);
+              }
+              });
+            },
+            error: function(error) {
+              alert("Error: " + error.code + " " + error.message);
+            }
+          });
+        });
       }
     },
     error: function(error) {
@@ -188,43 +223,6 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       }
   }
 
-  $("#endRoundButton").on("click", function(){
-    //determine the winner by comparing votes and incrementing the round
-
-    //query the team objects
-    var bracket = Parse.Object.extend("Brackets");
-    var query = new Parse.Query(bracket);
-    query.get(bid,{
-      success: function(object) {
-        var bracketData = object.get('bracket_data');
-        var currentRound = object.get('furthest_round');
-        var totalRounds = object.get("total_rounds");
-        var results = moveToNextRound(bracketData,totalRounds,currentRound); 
-        object.set("bracket_data", results);
-        object.set("furthest_round", currentRound+1);
-        object.save(null, {
-        success: function(savedObject) {
-          // Execute any logic that should take place after the object is saved.
-          console.log(JSON.stringify(savedObject));
-          if (creator==="yes"){
-            window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
-          }
-          else {
-            window.location.href = "./bracket.html?bid="+ bid;
-          }
-        },
-        error: function(savedObject, error) {
-          alert('Failed to create new object, with error code: ' + error.message);
-        }
-        });
-      },
-      error: function(error) {
-        alert("Error: " + error.code + " " + error.message);
-      }
-    });
-  });
-
-  var voteResult = [];
   $(document).on( "click", ".g_team", function() {
     if (creator==="yes"){
       window.location.href = "./vote.html?bid="+ bid + "&creator=yes";

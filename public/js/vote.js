@@ -50,6 +50,9 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     team1 = teams[0];
     team2 = teams[1];
     option_count = 0;
+
+    //display the indicator for the user
+    $("#indicator").append("1 of " + total_count);
   }
 
   function displayNextPair()
@@ -64,6 +67,10 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       team2 = teams[option_count*2+1];
       $("#team1").append(team1);
       $("#team2").append(team2);
+
+      //refresh the indicator
+      $("#indicator").html("");
+      $('#indicator').append("" + (option_count+1) + " of " + total_count);
     }
     else
     {
