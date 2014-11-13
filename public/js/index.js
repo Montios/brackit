@@ -17,8 +17,8 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     brackets.set("bracketSize", parseInt(bracketSize));
     brackets.save(null, {
     success: function(brackets) {
-      //alert('New object created with objectId: ' + brackets.id);
-      window.location.href = "./build.html";
+      //alert('New object created with objectId: ' + ;
+      window.location.href = "./build.html?bid="+brackets.id + "&creator=yes";
     },
     error: function(brackets, error) {
       // Execute any logic that should take place if the save fails.

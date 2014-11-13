@@ -1,11 +1,13 @@
 $(document).ready(function() {  
 Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD5vtUYRAwTEComMztpJVuTK");
+  
+  var bid = getUrlParameter("bid");
+  var creator = getUrlParameter("creator");
 
   //query the team objects
   var bracket = Parse.Object.extend("Brackets");
   var query = new Parse.Query(bracket);
-  query.descending('updatedAt');
-  query.first({
+  query.get(bid,{
     success: function(object) {
       var bracketData = object.get('bracket_data');
       var furthest_round = object.get('furthest_round');
@@ -20,6 +22,9 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       else {
         alert("Waiting on other players to join...");
       } 
+      if(creator==="yes"){
+        $("body").append("<a href='index.html' data-role='button' data-inline='true' data-theme='c' id='endRoundButton'>Move to next round</a>");
+      }
       $("#title").append(object.get('category'));
     },
     error: function(error) {
@@ -169,6 +174,20 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     return data;
   }
 
+  function getUrlParameter(sParam)
+  {
+      var sPageURL = window.location.search.substring(1);
+      var sURLVariables = sPageURL.split('&');
+      for (var i = 0; i < sURLVariables.length; i++) 
+      {
+          var sParameterName = sURLVariables[i].split('=');
+          if (sParameterName[0] == sParam) 
+          {
+              return sParameterName[1];
+          }
+      }
+  }
+
   function changeZoom() {
     newZoom= parseInt(oSlider.value)
       oZoom.style.zoom=newZoom+'%';
@@ -198,19 +217,13 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
    document.body.appendChild(el);
   }
 
-  //redirect to votes page
-  $("#voteButton").on("click", function(){
-    window.location.href = "./vote.html";
-  });
-
   $("#endRoundButton").on("click", function(){
     //determine the winner by comparing votes and incrementing the round
 
     //query the team objects
     var bracket = Parse.Object.extend("Brackets");
     var query = new Parse.Query(bracket);
-    query.descending('updatedAt');
-    query.first({
+    query.get(bid,{
       success: function(object) {
         var bracketData = object.get('bracket_data');
         var currentRound = object.get('furthest_round');
@@ -222,7 +235,12 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         success: function(savedObject) {
           // Execute any logic that should take place after the object is saved.
           console.log(JSON.stringify(savedObject));
-          window.location.href="./bracket.html";
+          if (creator==="yes"){
+            window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
+          }
+          else {
+            window.location.href = "./bracket.html?bid="+ bid;
+          }
         },
         error: function(savedObject, error) {
           alert('Failed to create new object, with error code: ' + error.message);
@@ -242,14 +260,20 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
 
   var voteResult = [];
   $(document).on( "click", ".g_team", function() {
-    console.log($(this).find("h3").clone().children().remove().end().text());
-    var selected = $(this).find("h3").clone().children().remove().end().text().trim();
-    //alert("Your choice is \""+selected+"\". Thanks");
-    $(this).css('background-color', '#FF66FF');
-    $(this).find("h3").css('color', '#ffffff');
-    voteResult.push(selected);
-    tempAlert("Your choice is \""+selected+"\". Thanks",1000);
-    console.log(voteResult);
+    // console.log($(this).find("h3").clone().children().remove().end().text());
+    // var selected = $(this).find("h3").clone().children().remove().end().text().trim();
+    // //alert("Your choice is \""+selected+"\". Thanks");
+    // $(this).css('background-color', '#FF66FF');
+    // $(this).find("h3").css('color', '#ffffff');
+    // voteResult.push(selected);
+    // tempAlert("Your choice is \""+selected+"\". Thanks",1000);
+    // console.log(voteResult);
+    if (creator==="yes"){
+      window.location.href = "./vote.html?bid="+ bid + "&creator=yes";
+    }
+    else {
+      window.location.href = "./vote.html?bid="+ bid;
+    }
   });
 
   // var bracketData = 

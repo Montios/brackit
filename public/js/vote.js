@@ -1,11 +1,12 @@
 $(document).ready(function() {  
 Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD5vtUYRAwTEComMztpJVuTK");
 
+  var bid = getUrlParameter("bid");
+  var creator = getUrlParameter("creator");
   //query the team objects
   var bracket = Parse.Object.extend("Brackets");
   var query = new Parse.Query(bracket);
-  query.descending('updatedAt');
-  query.first({
+  query.get(bid,{
     success: function(object) {
       bracketData = object.get('bracket_data');
       current_round = object.get('furthest_round');
@@ -69,8 +70,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       //user is done voting, so increment votes accordingly
       var bracket = Parse.Object.extend("Brackets");
       var query = new Parse.Query(bracket);
-      query.descending('updatedAt');
-      query.first({
+      query.get(bid, {
         success: function(object) {
           var bracketData = object.get('bracket_data');
           for (var i = 0; i < selected_teams.length; i++){
@@ -85,7 +85,12 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
           success: function(savedObject) {
             // Execute any logic that should take place after the object is saved.
             alert('Object saved with objectId: ' + savedObject.id);
-            window.location.href="./bracket.html";
+            if (creator==="yes"){
+              window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
+            }
+            else {
+              window.location.href = "./bracket.html?bid="+ bid;
+            }
           },
           error: function(brackets, error) {
             // Execute any logic that should take place if the save fails.
@@ -104,6 +109,20 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     }
   }
 
+  function getUrlParameter(sParam)
+  {
+      var sPageURL = window.location.search.substring(1);
+      var sURLVariables = sPageURL.split('&');
+      for (var i = 0; i < sURLVariables.length; i++) 
+      {
+          var sParameterName = sURLVariables[i].split('=');
+          if (sParameterName[0] == sParam) 
+          {
+              return sParameterName[1];
+          }
+      }
+  }     
+
   $("#team1").on("click", function(){
     selected_teams.push(team1);
     displayNextPair();
@@ -114,16 +133,11 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     displayNextPair();
   })
 
-  $("#skipButton").on("click", function(){
+  $("#neither").on("click", function(){
     selected_teams.push('nil');
     displayNextPair();
   })
 
-  // $( document ).on( "click", ".g_team", function() {
-  //   console.log($(this).find("h3").clone().children().remove().end().text());
-  //   var selected = $(this).find("h3").clone().children().remove().end().text().trim();
-  //   alert("Your choice is \""+selected+"\". Thanks");
-  // });
 });
 
 

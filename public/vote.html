@@ -6,6 +6,11 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js"></script>
 
+    <!-- ratchet files --> 
+    <link rel="stylesheet" href="./ratchet/css/ratchet.min.css">
+    <link rel="stylesheet" href="./ratchet/css/ratchet-theme-ios.min.css">
+    <script src="./ratchet/js/ratchet.min.js"></script>
+
     <!-- include the js file --> 
     <script type="text/javascript" src="./js/vote.js"></script>
 
@@ -26,15 +31,38 @@
       .g_winner .g_team { background: none; }
       .g_current { cursor: pointer; background: #A0B43C!important; }
       .g_round_label { top: -5px; font-weight: normal; color: #CCC; text-align: center; font-size: 18px; }
+      #vs { 
+        text-align:center; 
+        color:black; 
+        font-size:16px;
+        height:50px;
+        width:80%;
+        margin-left:10%;
+      }
+      #team1, #team2 {
+        height:50px;
+        width:80%;
+        margin-left:10%;
+      }
+      #neither {
+        height:50px;
+        width:20%;
+        margin-left:40%;
+        padding-top: 5px;
+      }
+      #title {
+        color:black; 
+        font-size:20px;
+      }
     </style>
 
   </head>
   <body>
-    <p align="center" style="font-size:20px" id="title"></p>
+    <p align="center" id="title"></p>
     <button id="team1" class="btn btn-primary"></button>
+    <p id="vs">vs.</p>
     <button id="team2" class="btn btn-primary"></button>
-    <button id="skipButton" class="btn btn-primary">Skip</button>
-    <button id="endVoting" class="btn btn-primary">Finish</button>
+    <button id="neither" class="btn btn-primary">Neither</button>
     <div class="my_gracket">
     </div>
   </body>

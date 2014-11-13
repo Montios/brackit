@@ -1,6 +1,9 @@
 $(document).ready(function() {  
  Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD5vtUYRAwTEComMztpJVuTK");
   
+  var bid = getUrlParameter("bid");
+  var creator = getUrlParameter("creator");
+
   //put functions that should run at load here
   buildInputFields();
 
@@ -24,11 +27,12 @@ $(document).ready(function() {
 
     //only save if user input properly, else alert user
     if (inputError==false){
+
       //save this user input to Parse
       var bracket = Parse.Object.extend("Brackets");
       var query = new Parse.Query(bracket);
-      query.descending('createdAt');
-      query.first({
+      //query.descending('createdAt');
+      query.get(bid,{
         success: function(object) {
           object.add("player_inputs",array);
 
@@ -43,7 +47,12 @@ $(document).ready(function() {
           }
           object.save();
           console.log("object updated");
-          window.location.href = "./bracket.html";
+          if (creator==="yes"){
+            window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
+          }
+          else {
+            window.location.href = "./bracket.html?bid="+ bid;
+          }
         },
         error: function(error) {
           alert("Error: " + error.code + " " + error.message);
@@ -59,10 +68,11 @@ $(document).ready(function() {
 
   function buildInputFields()
   {
+
     var bracket = Parse.Object.extend("Brackets");
     var query = new Parse.Query(bracket);
-    query.descending('createdAt');
-    query.first({
+    //query.descending('createdAt');
+    query.get(bid,{
       success: function(object) {
         //get the number of players and bracket size
         //and build the appropriate # of input fields
@@ -71,7 +81,13 @@ $(document).ready(function() {
         var inputs = object.get('player_inputs');
         if(inputs!=undefined && playerCount==inputs.length){
           alert("Players are no longer allowed to add teams!");
-          window.location.href = "./bracket.html";
+          if (creator==="yes"){
+            window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
+          }
+          else {
+            window.location.href = "./bracket.html?bid="+ bid;
+          }
+          
         }
         fieldsCount = Math.ceil(bracketSize/(0.75*playerCount));
         $('#categoryTitle').append(object.get('category'));
@@ -79,7 +95,12 @@ $(document).ready(function() {
         {
           //create the appropriate number of input fields based on formula
           $("#input_fields").append(
-            "<input id=" + i + " type='text' placeholder='Rank "+ i + "'>"
+            "<input id=" + i + " type='text' placeholder='Rank "+ i + "' required>"
+            )
+        }
+        if(creator==="yes"){
+          $(".content").append(
+            "<input id='share' value='test-bracketgame.parseapp.com/build.html?bid=" + bid +"'></input>"
             )
         }
       },
@@ -115,7 +136,20 @@ $(document).ready(function() {
         seed++;
       }
     }
-
     return data;
   }  
+
+  function getUrlParameter(sParam)
+  {
+      var sPageURL = window.location.search.substring(1);
+      var sURLVariables = sPageURL.split('&');
+      for (var i = 0; i < sURLVariables.length; i++) 
+      {
+          var sParameterName = sURLVariables[i].split('=');
+          if (sParameterName[0] == sParam) 
+          {
+              return sParameterName[1];
+          }
+      }
+  }      
 });
