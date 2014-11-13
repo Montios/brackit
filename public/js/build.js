@@ -42,7 +42,7 @@ $(document).ready(function() {
           var rounds = object.get('total_rounds');
           //check if all players have inputted
           //if so, build the bracketData based on the seeds and players
-          if (inputs.length == players){
+          if (inputs.length <= players){
             object.set('bracket_data', buildBracketData(inputs,players,size,rounds));
           }
           object.save();
@@ -79,7 +79,7 @@ $(document).ready(function() {
         var playerCount = object.get('playerCount');
         var bracketSize = object.get('bracketSize');
         var inputs = object.get('player_inputs');
-        if(inputs!=undefined && playerCount==inputs.length){
+        if(inputs!=undefined && playerCount<=inputs.length){
           alert("Players are no longer allowed to add teams!");
           if (creator==="yes"){
             window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";

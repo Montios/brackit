@@ -15,7 +15,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       $("#title").append(object.get('category'));
       //if all players have included some kind of input, build bracket
       //else, alert the user that other players still need to input
-      if (object.get('player_inputs').length == object.get('playerCount')){
+      if (object.get('player_inputs').length >= object.get('playerCount')){
         console.log(object.get('player_inputs').length);
         console.log(object.get('playerCount'));
         buildBracket(bracketData,totalRounds); 
