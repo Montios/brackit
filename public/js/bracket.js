@@ -23,7 +23,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       else {
         alert("Waiting on other players to join...");
       } 
-      if(creator==="yes" && bracketData!=undefined){
+      if(creator==="yes" && bracketData!=undefined && furthest_round!=totalRounds){
         $("#buttonLocation").append("<button id='endRoundButton' class='btn btn-primary'>Move to next round</button>");
         $("#endRoundButton").on("click", function(){
 
