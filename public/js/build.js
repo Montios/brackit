@@ -42,7 +42,7 @@ $(document).ready(function() {
           var rounds = object.get('total_rounds');
           //check if all players have inputted
           //if so, build the bracketData based on the seeds and players
-          if (inputs.length <= players){
+          if (inputs.length >= players){
             object.set('bracket_data', buildBracketData(inputs,players,size,rounds));
           }
           object.save();
