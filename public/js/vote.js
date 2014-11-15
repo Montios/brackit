@@ -88,9 +88,14 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
             }
           }
           var playersVoted = object.get('playersVoted');
+          var current_round = object.get('furthest_round');
+          var votedPlayers = object.get('votedPlayers');
+          var currentVoted = votedPlayers['round'+current_round];
           playersVoted++;
+          currentVoted++;
+          votedPlayers['round'+current_round] = currentVoted;
           object.set("playersVoted", playersVoted);
-          object.set("bracket_data", bracketData);
+          object.set("votedPlayers", votedPlayers);
           object.save(null, {
           success: function(savedObject) {
             // Execute any logic that should take place after the object is saved.

@@ -19,14 +19,28 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         console.log(object.get('player_inputs').length);
         console.log(object.get('playerCount'));
         buildBracket(bracketData,totalRounds); 
-        var refreshIntervalId;
-        
+
+        var refreshIntervalId;     
         refreshIntervalId = setInterval(function(){
-           var playersVoted = object.get('playersVoted');
-           if(playersVoted >= object.get('playerCount')){
-                clearInterval(refreshIntervalId);
-                autoMoveToNext();
-           }
+           var bracket1 = Parse.Object.extend("Brackets");
+           var query1 = new Parse.Query(bracket);
+           query1.get(bid, {
+          success: function(object) {
+            var votedPlayers = object.get('votedPlayers');
+            var current_round = object.get('furthest_round');
+            var currentVoted = votedPlayers['round'+current_round];    
+             if(furthest_round != current_round){
+                 window.location.href=window.location.href;
+             }
+             if(currentVoted >= object.get('playerCount')){
+                  autoMoveToNext();
+                  clearInterval(refreshIntervalId);
+             }
+          },
+          error: function(object, error) {
+              alert('Failed to get object, with error code: ' + error.message);
+          }
+         });          
         }, 1000);
 
       }
@@ -36,12 +50,8 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         setInterval(function(){
            var player = object.get('playerCount') - object.get('player_inputs').length;
            $("#playerCount").html("Building bracket, waiting for " + player + " people");
-           if (creator==="yes"){
-            window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
-          }
-          else {
-            window.location.href = "./bracket.html?bid="+ bid;
-          }
+           window.location.href=window.location.href;
+          
         }, 3000);
        
         //alert("Waiting on other players to join...");
@@ -268,10 +278,12 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
             success: function(object) {
               var bracketData = object.get('bracket_data');
               var currentRound = object.get('furthest_round');
+
               var totalRounds = object.get("total_rounds");
               var results = moveToNextRound(bracketData,totalRounds,currentRound); 
               object.set("bracket_data", results);
               object.set("furthest_round", currentRound+1);
+     
               object.save(null, {
               success: function(savedObject) {
                 // Execute any logic that should take place after the object is saved.
@@ -302,7 +314,6 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       window.location.href = "./vote.html?bid="+ bid;
     }
   });
-
   // var bracketData = 
   // [
   //   [

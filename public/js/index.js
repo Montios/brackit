@@ -16,6 +16,11 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     brackets.set("playerCount", parseInt($("#numPlayers").val()));
     brackets.set("bracketSize", parseInt(bracketSize));
     brackets.set("playersVoted", 0);
+    var votedPlayers = {};
+    for(var i = 1; i <= rounds+1; i++){
+      votedPlayers['round' + i] = 0; 
+    }
+    brackets.set("votedPlayers", votedPlayers);
     brackets.save(null, {
     success: function(brackets) {
       //alert('New object created with objectId: ' + ;
