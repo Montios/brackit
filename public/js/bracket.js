@@ -80,6 +80,21 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     }
   });
 
+  //display countdown timer for voting
+  $(function(){ 
+    var currTime = new Date();
+    var endTime = new Date();
+    endTime.setMinutes(currTime.getMinutes()+2);
+    $('#timer').countdown({
+      until: endTime,
+      format: "MS",
+      compact: true
+    });
+  });
+
+
+
+
   //NOTES
   //name = string value given in bracket
   //id = allows for unique hovering
