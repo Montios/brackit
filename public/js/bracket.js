@@ -21,7 +21,9 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         buildBracket(bracketData,totalRounds); 
       }
       else {
-        alert("Waiting on other players to join...");
+        var player = object.get('playerCount') - object.get('player_inputs').length;
+        $("#playerCount").html("Building bracket, waiting for " + player + " people");
+        //alert("Waiting on other players to join...");
       } 
       if(creator==="yes" && bracketData!=undefined && furthest_round!=totalRounds){
         $("#buttonLocation").append("<button id='endRoundButton' class='btn btn-primary'>Move to next round</button>");
