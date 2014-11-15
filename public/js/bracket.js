@@ -23,6 +23,17 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       else {
         var player = object.get('playerCount') - object.get('player_inputs').length;
         $("#playerCount").html("Building bracket, waiting for " + player + " people");
+        setInterval(function(){
+           var player = object.get('playerCount') - object.get('player_inputs').length;
+           $("#playerCount").html("Building bracket, waiting for " + player + " people");
+           if (creator==="yes"){
+            window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
+          }
+          else {
+            window.location.href = "./bracket.html?bid="+ bid;
+          }
+        }, 3000);
+       
         //alert("Waiting on other players to join...");
       } 
       if(creator==="yes" && bracketData!=undefined && furthest_round!=totalRounds){
