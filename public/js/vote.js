@@ -87,11 +87,14 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
               }
             }
           }
+          var playersVoted = object.get('playersVoted');
+          playersVoted++;
+          object.set("playersVoted", playersVoted);
           object.set("bracket_data", bracketData);
           object.save(null, {
           success: function(savedObject) {
             // Execute any logic that should take place after the object is saved.
-            alert('Object saved with objectId: ' + savedObject.id);
+           // alert('Object saved with objectId: ' + savedObject.id);
             if (creator==="yes"){
               window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
             }

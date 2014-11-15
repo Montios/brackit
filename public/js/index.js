@@ -15,6 +15,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     brackets.set("category", $("#category").val());
     brackets.set("playerCount", parseInt($("#numPlayers").val()));
     brackets.set("bracketSize", parseInt(bracketSize));
+    brackets.set("playersVoted", 0);
     brackets.save(null, {
     success: function(brackets) {
       //alert('New object created with objectId: ' + ;
