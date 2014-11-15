@@ -19,6 +19,16 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         console.log(object.get('player_inputs').length);
         console.log(object.get('playerCount'));
         buildBracket(bracketData,totalRounds); 
+        var refreshIntervalId;
+        
+        refreshIntervalId = setInterval(function(){
+           var playersVoted = object.get('playersVoted');
+           if(playersVoted >= object.get('playerCount')){
+                clearInterval(refreshIntervalId);
+                autoMoveToNext();
+           }
+        }, 1000);
+
       }
       else {
         var player = object.get('playerCount') - object.get('player_inputs').length;
@@ -249,6 +259,39 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
               return sParameterName[1];
           }
       }
+  }
+
+  function autoMoveToNext(){
+          var bracket = Parse.Object.extend("Brackets");
+          var query = new Parse.Query(bracket);
+          query.get(bid,{
+            success: function(object) {
+              var bracketData = object.get('bracket_data');
+              var currentRound = object.get('furthest_round');
+              var totalRounds = object.get("total_rounds");
+              var results = moveToNextRound(bracketData,totalRounds,currentRound); 
+              object.set("bracket_data", results);
+              object.set("furthest_round", currentRound+1);
+              object.save(null, {
+              success: function(savedObject) {
+                // Execute any logic that should take place after the object is saved.
+                console.log(JSON.stringify(savedObject));
+                if (creator==="yes"){
+                  window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
+                }
+                else {
+                  window.location.href = "./bracket.html?bid="+ bid;
+                }
+              },
+              error: function(savedObject, error) {
+                alert('Failed to create new object, with error code: ' + error.message);
+              }
+              });
+            },
+            error: function(error) {
+              alert("Error: " + error.code + " " + error.message);
+            }
+          });
   }
 
   $(document).on( "click", ".g_team", function() {
