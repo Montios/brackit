@@ -25,12 +25,16 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
            var bracket1 = Parse.Object.extend("Brackets");
            var query1 = new Parse.Query(bracket);
            query1.get(bid, {
-          success: function(object) {
+           success: function(object) {
             var votedPlayers = object.get('votedPlayers');
             var current_round = object.get('furthest_round');
             var currentVoted = votedPlayers['round'+current_round];    
              if(furthest_round != current_round){
+                if(current_round == object.get('total_rounds')){
+                  $("#timer").remove();
+                }
                  window.location.href=window.location.href;
+                }
              }
              if(currentVoted >= object.get('playerCount')){
                   autoMoveToNext();
@@ -108,7 +112,8 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     $('#timer').countdown({
       until: endTime,
       format: "MS",
-      compact: true
+      compact: true,
+      onExpiry: autoMoveToNext
     });
   });
 
@@ -287,13 +292,10 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
               object.save(null, {
               success: function(savedObject) {
                 // Execute any logic that should take place after the object is saved.
-                console.log(JSON.stringify(savedObject));
-                if (creator==="yes"){
-                  window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
+                 if(current_round == object.get('total_rounds')){
+                  $("#timer").remove();
                 }
-                else {
-                  window.location.href = "./bracket.html?bid="+ bid;
-                }
+                window.location.href=window.location.href;
               },
               error: function(savedObject, error) {
                 alert('Failed to create new object, with error code: ' + error.message);
