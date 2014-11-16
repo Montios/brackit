@@ -30,11 +30,8 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
             var current_round = object.get('furthest_round');
             var currentVoted = votedPlayers['round'+current_round];    
              if(furthest_round != current_round){
-                if(current_round == object.get('total_rounds')){
-                  $("#timer").remove();
-                }
                  window.location.href=window.location.href;
-                }
+                
              }
              if(currentVoted >= object.get('playerCount')){
                   autoMoveToNext();
@@ -42,7 +39,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
              }
           },
           error: function(object, error) {
-              alert('Failed to get object, with error code: ' + error.message);
+             
           }
          });          
         }, 1000);
@@ -115,6 +112,27 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       compact: true,
       onExpiry: autoMoveToNext
     });
+  });
+
+
+  $(function(){
+
+     var bracket = Parse.Object.extend("Brackets");
+     var query = new Parse.Query(bracket);
+     query.get(bid, {
+     success: function(object) {
+      var current_round = object.get('furthest_round');
+      if(current_round >= object.get('total_rounds')){
+        console.log("%%%%%%%%");
+        $("#timer").css('visibility', 'hidden');
+      }        
+      
+    },
+    error: function(object, error) {
+       
+    }
+   });          
+
   });
 
 
@@ -292,9 +310,6 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
               object.save(null, {
               success: function(savedObject) {
                 // Execute any logic that should take place after the object is saved.
-                 if(current_round == object.get('total_rounds')){
-                  $("#timer").remove();
-                }
                 window.location.href=window.location.href;
               },
               error: function(savedObject, error) {
