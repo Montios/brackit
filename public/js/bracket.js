@@ -17,6 +17,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         var inputs = object.get('player_inputs');
         var playerCount = object.get('playerCount');
         var endTime = object.get('end_round');
+        var bracketSize = object.get('bracketSize');
         $("#title").append(object.get('category'));
         //if all players have included some kind of input, play the game
         //else, display the message that users still need to input
@@ -27,6 +28,41 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
           //display the message
           var playersLeft = playerCount - inputs.length;
           $('#playerCount').html("Building bracket...waiting for " + playersLeft + " player(s)");
+          $("#startGame").html("<button type='button' id='startnow' class='btn btn-primary'>Start Game Now</button>");
+          $("#startnow").on("click", function(){ 
+            console.log(inputs.length);
+            if (inputs.length<playerCount){
+              //get missing players
+              var playersInput=[];
+              var neededPlayers = playerCount - inputs.length;
+              var fieldsCount = Math.ceil(bracketSize/(0.75*playerCount));
+              for (var i = 0; i < neededPlayers; i++){
+                for(var j = 0; j < fieldsCount; j++) {
+                  playersInput.push("Byes");
+                }
+                inputs.push(playersInput);
+                playersInput=[];
+              }
+
+              var data= buildBracketData(inputs,playerCount,bracketSize,totalRounds);
+              object.set('bracket_data', data);
+
+              var endTime = new Date();
+              endTime.setMinutes(endTime.getMinutes()+1);
+              object.set('end_round',endTime);
+
+              //save the new inputs
+              object.save(null, {
+              success: function(savedObject) {
+                //game will check if ready
+
+              },
+              error: function(savedObject, error) {
+                alert('Failed to create new object, with error code: ' + error.message);
+              }
+              });
+            }
+          });
 
           //check when the game will be ready
           var checkInputsInterval; 
@@ -43,15 +79,53 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
                 var furthest_round = object.get('furthest_round');
                 var totalRounds = object.get("total_rounds");
                 var endTime = object.get('end_round');
+                var bracketSize = object.get('bracketSize');
                 if (inputs.length >= playerCount){
                   console.log("ready!");
                   clearInterval(checkInputsInterval);
                   $('#playerCount').html("");
+                  $('#startGame').html("");
                   playGame(bracketData,totalRounds,furthest_round,endTime);
                 }
                 else {
                   console.log("not ready");
                   $('#playerCount').html("Building bracket...waiting for " + playersLeft + " player(s)");
+                  //append the force start game button
+                  $("#startGame").html("<button type='button' id='startnow' class='btn btn-primary'>Start Game Now</button>");
+                  $("#startnow").on("click", function(){ 
+                    console.log(inputs.length);
+                    if (inputs.length<playerCount){
+                      //get missing players
+                      var playersInput=[];
+                      var neededPlayers = playerCount - inputs.length;
+                      var fieldsCount = Math.ceil(bracketSize/(0.75*playerCount));
+                      for (var i = 0; i < neededPlayers; i++){
+                        for(var j = 0; j < fieldsCount; j++) {
+                          playersInput.push("Byes");
+                        }
+                        inputs.push(playersInput);
+                        playersInput=[];
+                      }
+
+                      var data= buildBracketData(inputs,playerCount,bracketSize,totalRounds);
+                      object.set('bracket_data', data);
+
+                      var endTime = new Date();
+                      endTime.setMinutes(endTime.getMinutes()+1);
+                      object.set('end_round',endTime);
+
+                      //save the new inputs
+                      object.save(null, {
+                      success: function(savedObject) {
+                        //game will check if ready
+
+                      },
+                      error: function(savedObject, error) {
+                        alert('Failed to create new object, with error code: ' + error.message);
+                      }
+                      });
+                    }
+                  });
                 }
               },
               error: function(error) {
@@ -220,6 +294,37 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       }        
   }
 
+  //function to build the bracket data based on seeds and # of players
+  function buildBracketData(inputs,players,size,rounds){
+    var data =[];
+    var seed = 0; 
+    var index = 0; 
+    while (data.length!=size){
+      //run through the highest seed of each player and add to data
+      //then repeat with next seed
+
+      var team ={};
+      team['round'] = 1; 
+      team['value'] = inputs[index][seed];
+      //create all the vote + i fields in the team object
+      for (var i = 1; i<rounds; i++) {
+        team['votes' + i] = 0; 
+        if(team['value']=="Byes"){
+          team['votes' + i] = -1; 
+        }
+      }
+      data.push(team);
+      index++;
+      if(index == players) {
+        //if the index is the same as players, move to the next seed
+        //and restart the index
+        index = 0; 
+        seed++;
+      }
+    }
+    return data;
+  }  
+
   //function to increment the round based on vote
   function calculateWinners(data,totalRounds,currentRound) {
     var pairCount = 0;
@@ -332,26 +437,3 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
 
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

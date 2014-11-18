@@ -103,6 +103,7 @@ $(document).ready(function() {
             )
         }
         if(creator==="yes"){
+          //append the shareable link
           $(".content").append(
             "<input id='share' onClick='this.setSelectionRange(0, this.value.length)'" +
             " value='test-bracketgame.parseapp.com/build.html?bid=" + bid +"'></input>"

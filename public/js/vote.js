@@ -42,14 +42,8 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     total_count = teams.length/2; 
     console.log(total_count);
 
-    //display the first two in the buttons
-    $("#team1").append(teams[0]);
-    $("#team2").append(teams[1]);
-
-    //store the current two teams
-    team1 = teams[0];
-    team2 = teams[1];
-    option_count = 0;
+    option_count=0;
+    displayNextPair();
 
     //display the indicator for the user
     $("#indicator").append("1 of " + total_count);
@@ -57,16 +51,23 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
 
   function displayNextPair()
   {
-    option_count++; 
+    team1 = teams[option_count*2];
+    team2 = teams[option_count*2+1];  
     if(option_count!=total_count)
     {
-      //access the elements of the next pair in the teams
-      $("#team1").html("");
-      $("#team2").html("");
-      team1 = teams[option_count*2];
-      team2 = teams[option_count*2+1];
-      $("#team1").append(team1);
-      $("#team2").append(team2);
+      while(team1=="Byes" || team2=="Byes"){
+        //skip the round if there is a bye
+        option_count++;
+        total_count--;
+        if(option_count>total_count){
+          returnToBracket();
+        }
+        team1 = teams[option_count*2];
+        team2 = teams[option_count*2+1];
+      }
+
+      $("#team1").html(team1);
+      $("#team2").html(team2);
 
       //refresh the indicator
       $("#indicator").html("");
@@ -74,53 +75,59 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     }
     else
     {
-      //alert("last round");
-      //user is done voting, so increment votes accordingly
-      var bracket = Parse.Object.extend("Brackets");
-      var query = new Parse.Query(bracket);
-      query.get(bid, {
-        success: function(object) {
-          var bracketData = object.get('bracket_data');
-          var current_round = object.get('furthest_round');
-          //alert("currentround" + current_round);
-          var playersVoted = object.get('playersVoted');
-          playersVoted++;
-
-          for (var i = 0; i < selected_teams.length; i++){
-            for(var j = 0; j<bracketData.length; j++){
-              if(bracketData[j].value==selected_teams[i]){
-                bracketData[j]["votes" + current_round]++; 
-              }
-            }
-          }
-
-          object.set("bracket_data",bracketData);
-          object.set("playersVoted", playersVoted);
-          object.save(null, {
-          success: function(savedObject) {
-            // Execute any logic that should take place after the object is saved.
-           // alert('Object saved with objectId: ' + savedObject.id);
-            if (creator==="yes"){
-              window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
-            }
-            else {
-              window.location.href = "./bracket.html?bid="+ bid;
-            }
-          },
-          error: function(brackets, error) {
-            // Execute any logic that should take place if the save fails.
-            // error is a Parse.Error with an error code and message.
-            alert('Failed to create new object, with error code: ' + error.message);
-          }
-          });
-
-        },
-        error: function(error) {
-          alert("Error: " + error.code + " " + error.message);
-        }
-      });
-      console.log(JSON.stringify(bracketData));
+      returnToBracket();
     }
+    option_count++;
+  }
+
+  function returnToBracket()
+  {
+    //alert("last round");
+    //user is done voting, so increment votes accordingly
+    var bracket = Parse.Object.extend("Brackets");
+    var query = new Parse.Query(bracket);
+    query.get(bid, {
+      success: function(object) {
+        var bracketData = object.get('bracket_data');
+        var current_round = object.get('furthest_round');
+        //alert("currentround" + current_round);
+        var playersVoted = object.get('playersVoted');
+        playersVoted++;
+
+        for (var i = 0; i < selected_teams.length; i++){
+          for(var j = 0; j<bracketData.length; j++){
+            if(bracketData[j].value==selected_teams[i]){
+              bracketData[j]["votes" + current_round]++; 
+            }
+          }
+        }
+
+        object.set("bracket_data",bracketData);
+        object.set("playersVoted", playersVoted);
+        object.save(null, {
+        success: function(savedObject) {
+          // Execute any logic that should take place after the object is saved.
+         // alert('Object saved with objectId: ' + savedObject.id);
+          if (creator==="yes"){
+            window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
+          }
+          else {
+            window.location.href = "./bracket.html?bid="+ bid;
+          }
+        },
+        error: function(brackets, error) {
+          // Execute any logic that should take place if the save fails.
+          // error is a Parse.Error with an error code and message.
+          alert('Failed to create new object, with error code: ' + error.message);
+        }
+        });
+
+      },
+      error: function(error) {
+        alert("Error: " + error.code + " " + error.message);
+      }
+    });
+    console.log(JSON.stringify(bracketData));
   }
 
   function getUrlParameter(sParam)
