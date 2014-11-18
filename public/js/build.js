@@ -100,7 +100,8 @@ $(document).ready(function() {
         }
         if(creator==="yes"){
           $(".content").append(
-            "<input id='share' value='test-bracketgame.parseapp.com/build.html?bid=" + bid +"'></input>"
+            "<input id='share' onClick='this.setSelectionRange(0, this.value.length)'" +
+            " value='test-bracketgame.parseapp.com/build.html?bid=" + bid +"'></input>"
             )
         }
       },
