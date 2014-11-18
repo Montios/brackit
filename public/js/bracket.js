@@ -16,11 +16,12 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         var totalRounds = object.get("total_rounds");
         var inputs = object.get('player_inputs');
         var playerCount = object.get('playerCount');
+        var endTime = object.get('end_round');
         $("#title").append(object.get('category'));
         //if all players have included some kind of input, play the game
         //else, display the message that users still need to input
         if (inputs.length >= playerCount){
-          playGame(bracketData,totalRounds,furthest_round);
+          playGame(bracketData,totalRounds,furthest_round,endTime);
         }
         else {
           //display the message
@@ -40,12 +41,13 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
                 var playersLeft = playerCount - inputs.length; 
                 var bracketData = object.get('bracket_data');
                 var furthest_round = object.get('furthest_round');
-                var totalRounds = object.get("total_rounds")
+                var totalRounds = object.get("total_rounds");
+                var endTime = object.get('end_round');
                 if (inputs.length >= playerCount){
                   console.log("ready!");
                   clearInterval(checkInputsInterval);
                   $('#playerCount').html("");
-                  playGame(bracketData,totalRounds,furthest_round);
+                  playGame(bracketData,totalRounds,furthest_round,endTime);
                 }
                 else {
                   console.log("not ready");
@@ -58,9 +60,6 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
             });
           },3000);
         } 
-        //add anything that only the creator can see
-        if(creator==="yes" && bracketData!=undefined && furthest_round!=totalRounds){
-        }
       },
       error: function(error) {
         alert("Error: " + error.code + " " + error.message);
@@ -68,39 +67,47 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     });
   }
 
-  function playGame(data,rounds,furthest)
+  function playGame(data,rounds,furthest,endTime)
   {
-    buildBracket(data,rounds,furthest); 
+    buildBracket(data,rounds,furthest,endTime); 
 
-    var refreshIntervalId;     
-    refreshIntervalId = setInterval(function(){
-       var bracket = Parse.Object.extend("Brackets");
-       var query = new Parse.Query(bracket);
-       query.get(bid, {
-       success: function(object) {
-        var votedPlayers = object.get('votedPlayers');
-        var current_round = object.get('furthest_round');
-        var currentVoted = votedPlayers['round'+current_round]; 
-        var furthest_round = object.get('furthest_round');
-        //if the rounds do not match, then move to the next round   
-         if(furthest_round != current_round){
-             window.location.href=window.location.href;
+    //only play the game if there are still rounds left
+    if (furthest < rounds) {
+      var refreshIntervalId;     
+      refreshIntervalId = setInterval(function(){
+         console.log("interval restart");
+         var bracket = Parse.Object.extend("Brackets");
+         var query = new Parse.Query(bracket);
+         query.get(bid, {
+         success: function(object) {
+          var current_round = object.get('furthest_round');
+          var playersVoted = object.get('playersVoted');
+          var total_rounds = object.get('total_rounds');
+          //if the rounds do not match, then refresh to see updated bracket 
+          console.log("starting" + furthest);
+          console.log("now currently" + current_round);
+          if(furthest != current_round){
+            window.location.href=window.location.href;
+            clearInterval(refreshIntervalId);
+            //this doesnt work
+          }
+          //only move to next round if you are the creator and there are still more rounds to play
+          if(playersVoted >= object.get('playerCount') && creator=="yes"){
+            moveToNextRound();
+            clearInterval(refreshIntervalId);
          }
-         if(currentVoted >= object.get('playerCount')){
-              moveToNextRound();
-              clearInterval(refreshIntervalId);
+         //just refresh if you are not the creator
+         if(playersVoted >= object.get('playerCount') && creator!="yes"){
+            window.location.href=window.location.href;
+            clearInterval(refreshIntervalId);
          }
-      },
-      error: function(object, error) {
-         
-      }
-     });          
-    }, 1000);
-  }
-
-  function readyToBuildBracket() {
-    //query the team objects
-
+        },
+        error: function(object, error) {
+           
+        }
+       });          
+      }, 2000);
+    }
   }
 
   //NOTES
@@ -109,9 +116,8 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
   //seed = number shown before value
 
   var bracketData = []; 
-  function buildBracket(data,rounds,currRound)
+  function buildBracket(data,rounds,currRound,endTime)
   {
-      console.log (JSON.stringify(data));
       var bracketData= []; //store the entire data for bracket
       var roundArray = []; //store each round's teams
       var pairArray = [];  //store an array of team pairs
@@ -124,13 +130,11 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
           //only add the team to the array if it is >= the current round
           if (data[j].round >= i){
             team_list.push(data[j].value);
-            console.log(JSON.stringify(data[j].value));
           }
         }
 
         //calculate how many pairs there should be for each round, except winner
         var pairNumber = Math.ceil((Math.pow(2,(rounds - i)))/2); 
-        console.log(pairNumber);
 
         //if the team list length isnt 0, then we have all the necessary teams
         if(team_list.length!=0) {
@@ -199,9 +203,9 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       });
 
       //start the timer
-      var currTime = new Date();
-      var endTime = new Date();
-      endTime.setMinutes(currTime.getMinutes()+1);
+      // var currTime = new Date();
+      // var endTime = new Date();
+      // endTime.setMinutes(currTime.getMinutes()+1);
       $('#timer').countdown({
         until: endTime,
         format: "MS",
@@ -214,24 +218,16 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         console.log("%%%%%%%%");
         $("#timer").css('visibility', 'hidden');
       }        
-
-      console.log(JSON.stringify(bracketData));
   }
 
   //function to increment the round based on vote
   function calculateWinners(data,totalRounds,currentRound) {
-    console.log("currentRound");
-    console.log(currentRound);
     var pairCount = 0;
     for (var i = 0; i<data.length; i++) {
       var team1_index; 
       var team2_index; 
-      console.log("objectRound")
-      console.log(data[i]["round"]);
       if (data[i]["round"] == currentRound) {
-        console.log("equal");
         if(pairCount==0){
-          console.log("pairCount==0");
           team1_index = i; 
           pairCount++;
         }
@@ -239,8 +235,6 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
           team2_index = i; 
           if (data[team1_index]["votes" + currentRound]>data[team2_index]["votes" + currentRound]){
             data[team1_index]["round"]++;
-            console.log(JSON.stringify(data[team1_index]["value"]));
-            console.log(JSON.stringify(data[team1_index]["round"]));
           }
           else if(data[team1_index]["votes" + currentRound]==data[team2_index]["votes" + currentRound]){
             var randNum = Math.round(Math.random());
@@ -253,8 +247,6 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
           }
           else{
             data[team2_index]["round"]++;
-            console.log(JSON.stringify(data[team2_index]["value"]));
-            console.log(JSON.stringify(data[team2_index]["round"]));
           }
           pairCount=0;
         }
@@ -286,8 +278,12 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         var currentRound = object.get('furthest_round');
         var totalRounds = object.get("total_rounds");
         var results = calculateWinners(bracketData,totalRounds,currentRound); 
+        var endTime = new Date();
+        endTime.setMinutes(endTime.getMinutes()+1);
         object.set("bracket_data", results);
         object.set("furthest_round", currentRound+1);
+        object.set("end_round", endTime);
+        object.set("playersVoted",0);
 
         object.save(null, {
         success: function(savedObject) {

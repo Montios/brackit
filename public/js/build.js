@@ -43,7 +43,11 @@ $(document).ready(function() {
           //check if all players have inputted
           //if so, build the bracketData based on the seeds and players
           if (inputs.length >= players){
+            var endTime = new Date();
+            endTime.setMinutes(endTime.getMinutes()+1);
             object.set('bracket_data', buildBracketData(inputs,players,size,rounds));
+            //set the end time for the first round as well
+            object.set('end_round', endTime);
           }
           object.save();
           console.log("object updated");

@@ -23,8 +23,8 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
   //name = string value given in bracket
   //id = allows for unique hovering
   //seed = number shown before value
-  var bracketData; 
-  var current_round;
+  // var bracketData; 
+  // var current_round;
   var teams = [];
   var selected_teams = []; 
   var team1; 
@@ -74,12 +74,18 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     }
     else
     {
+      //alert("last round");
       //user is done voting, so increment votes accordingly
       var bracket = Parse.Object.extend("Brackets");
       var query = new Parse.Query(bracket);
       query.get(bid, {
         success: function(object) {
           var bracketData = object.get('bracket_data');
+          var current_round = object.get('furthest_round');
+          //alert("currentround" + current_round);
+          var playersVoted = object.get('playersVoted');
+          playersVoted++;
+
           for (var i = 0; i < selected_teams.length; i++){
             for(var j = 0; j<bracketData.length; j++){
               if(bracketData[j].value==selected_teams[i]){
@@ -87,15 +93,9 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
               }
             }
           }
-          var playersVoted = object.get('playersVoted');
-          var current_round = object.get('furthest_round');
-          var votedPlayers = object.get('votedPlayers');
-          var currentVoted = votedPlayers['round'+current_round];
-          playersVoted++;
-          currentVoted++;
-          votedPlayers['round'+current_round] = currentVoted;
+
+          object.set("bracket_data",bracketData);
           object.set("playersVoted", playersVoted);
-          object.set("votedPlayers", votedPlayers);
           object.save(null, {
           success: function(savedObject) {
             // Execute any logic that should take place after the object is saved.
@@ -120,7 +120,6 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         }
       });
       console.log(JSON.stringify(bracketData));
-
     }
   }
 
