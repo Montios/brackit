@@ -107,7 +107,13 @@ $(document).ready(function() {
           $(".content").append(
             "<input id='share' onClick='this.setSelectionRange(0, this.value.length)'" +
             " value='test-bracketgame.parseapp.com/build.html?bid=" + bid +"'></input>"
-            )
+            );
+          $(".content").append(
+            "<button id='sendemail' class='btn btn-primary'>Send by Email</button>"
+            );
+          $("#sendemail").on('click', function(){
+            document.location.href = "mailto:?Subject=Join%20my%20BrackIt%20game!";
+          });
         }
       },
       error: function(error) {
@@ -115,7 +121,6 @@ $(document).ready(function() {
       }
     });
   }
-
 
   //function to build the bracket data based on seeds and # of players
   function buildBracketData(inputs,players,size,rounds){
@@ -142,8 +147,13 @@ $(document).ready(function() {
         seed++;
       }
     }
-    return data;
+    var shuffled_data = Shuffle(data);
+    return shuffled_data;
   }  
+  function Shuffle(o) {
+    for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+  };
 
   function getUrlParameter(sParam)
   {

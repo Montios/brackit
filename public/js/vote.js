@@ -1,6 +1,6 @@
 $(document).ready(function() {  
 Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD5vtUYRAwTEComMztpJVuTK");
-
+  
   var bid = getUrlParameter("bid");
   var creator = getUrlParameter("creator");
   //query the team objects
@@ -44,9 +44,6 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
 
     option_count=0;
     displayNextPair();
-
-    //display the indicator for the user
-    $("#indicator").append("1 of " + total_count);
   }
 
   function displayNextPair()
@@ -58,7 +55,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       while(team1=="Byes" || team2=="Byes"){
         //skip the round if there is a bye
         option_count++;
-        total_count--;
+        //total_count--;
         if(option_count>total_count){
           returnToBracket();
         }
@@ -160,5 +157,6 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
   })
 
 });
+
 
 

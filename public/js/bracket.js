@@ -28,7 +28,9 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
           //display the message
           var playersLeft = playerCount - inputs.length;
           $('#playerCount').html("Building bracket...waiting for " + playersLeft + " player(s)");
-          $("#startGame").html("<button type='button' id='startnow' class='btn btn-primary'>Start Game Now</button>");
+          if (creator == "yes"){
+            $("#startGame").html("<button type='button' id='startnow' class='btn btn-primary'>Start Game Now</button>");
+          }
           $("#startnow").on("click", function(){ 
             console.log(inputs.length);
             if (inputs.length<playerCount){
@@ -91,7 +93,9 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
                   console.log("not ready");
                   $('#playerCount').html("Building bracket...waiting for " + playersLeft + " player(s)");
                   //append the force start game button
-                  $("#startGame").html("<button type='button' id='startnow' class='btn btn-primary'>Start Game Now</button>");
+                  if (creator == "yes"){
+                    $("#startGame").html("<button type='button' id='startnow' class='btn btn-primary'>Start Game Now</button>");
+                  }
                   $("#startnow").on("click", function(){ 
                     console.log(inputs.length);
                     if (inputs.length<playerCount){
@@ -299,21 +303,26 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     var data =[];
     var seed = 0; 
     var index = 0; 
-    while (data.length!=size){
+    //run the while loop either until the bracket is full, or no more inputs
+    while (data.length!=size && seed<inputs[0].length){
       //run through the highest seed of each player and add to data
       //then repeat with next seed
 
       var team ={};
-      team['round'] = 1; 
-      team['value'] = inputs[index][seed];
-      //create all the vote + i fields in the team object
-      for (var i = 1; i<rounds; i++) {
-        team['votes' + i] = 0; 
-        if(team['value']=="Byes"){
-          team['votes' + i] = -1; 
+      //don't add byes until the very end
+      if (inputs[index][seed]!="Byes"){
+        team['round'] = 1; 
+        team['value'] = inputs[index][seed];
+        //create all the vote + i fields in the team object
+        for (var i = 1; i<rounds; i++) {
+          team['votes' + i] = 0; 
+          if(team['value']=="Byes"){
+            team['votes' + i] = -1; 
+          }
         }
+
+        data.push(team);
       }
-      data.push(team);
       index++;
       if(index == players) {
         //if the index is the same as players, move to the next seed
@@ -322,8 +331,30 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         seed++;
       }
     }
-    return data;
+
+    //finish by filling the rest of the bracket data with byes
+    while (data.length!=size){
+
+      //run through the highest seed of each player and add to data
+      //then repeat with next seed
+      var team ={};
+      team['round'] = 1; 
+      team['value'] = "Byes";
+      //create all the vote + i fields in the team object
+      for (var i = 1; i<rounds; i++) {
+          team['votes' + i] = -1; 
+      }
+      data.push(team);
+    }
+    //shuffle the data
+    var shuffled_data = Shuffle(data);
+    return shuffled_data;
   }  
+
+  function Shuffle(o) {
+    for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+  };
 
   //function to increment the round based on vote
   function calculateWinners(data,totalRounds,currentRound) {
@@ -433,7 +464,11 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
   //   [
   //     [{"name":"To Be Determined","id":"tbd"}]
   //   ]
+  // ]
+  //     [{"name":"To Be Determined","id":"tbd"},{"name":"To Be Determined","id":"tbd"}]
+  //   ],
+  //   [
+  //     [{"name":"To Be Determined","id":"tbd"}]
+  //   ]
   // ];
-
-
 });
