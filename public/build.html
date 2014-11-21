@@ -1,68 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>My ParseApp site</title>
-    <style>
-    </style>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js"></script>
+<head>
+  <title>My ParseApp site</title>
+  <style>
+  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js"></script>
 
-    <!-- ratchet files --> 
-    <link rel="stylesheet" href="./ratchet/css/ratchet.min.css">
-    <link rel="stylesheet" href="./ratchet/css/ratchet-theme-ios.min.css">
-    <script src="./ratchet/js/ratchet.min.js"></script>
+  <!-- ratchet files --> 
+  <link rel="stylesheet" href="./ratchet/css/ratchet.min.css">
+  <link rel="stylesheet" href="./ratchet/css/ratchet-theme-ios.min.css">
+  <script src="./ratchet/js/ratchet.min.js"></script>
 
-    <!-- include the js file --> 
-    <script type="text/javascript" src="./js/build.js"></script>
+  <!-- include the js file --> 
+  <script type="text/javascript" src="./js/build.js"></script>
 
-    <style>
-      #addInputs {
-        height:50px;
-        width:80%;
-        margin-left:10%;
-        margin-top:20px;
-      }
-      #sendemail{
-        height:50px;
-        width:80%;
-        margin-left:10%;
-        margin-top:20px;
-      }
-      #share {
-        width:80%;
-        margin-left:10%;
-        margin-top:20px;
-      }
-      body
-      {
+  <style>
+    #addInputs {
+      height:50px;
+      width:80%;
+      margin-left:10%;
+      margin-top:20px;
+    }
+    #sendemail{
+      height:50px;
+      width:80%;
+      margin-left:10%;
+      margin-top:20px;
+    }
+    #share {
+      width:80%;
+      margin-left:10%;
+      margin-top:20px;
+    }
+    body
+    {
       height: auto !important;
       position: static !important; 
-      }
-      .content
-      {
+    }
+    .content
+    {
       height: 100% !important;
       position: static !important;
-      }
+    }
 
-    </style>
-    
-  </head>
-    <body>
-    <header class="bar bar-nav">
-      <a class="icon icon-refresh pull-right"></a>
-      <h1 id="categoryTitle" class="title"></h1>
-    </header>
-    
+  </style>
+  
+</head>
+<body>
+  <header class="bar bar-nav">
+    <a class="icon icon-refresh pull-right"></a>
+    <h1 id="categoryTitle" class="title"></h1>
+  </header>
+  
 
-    <div class="content">
-      <form class="input-group" id="input_fields">
-      </form>
-      <button id="addInputs" class="btn btn-primary">Submit</button>
-    </div>
+  <div class="content">
+    <form class="input-group" id="input_fields">
+    </form>
+    <button id="addInputs" class="btn btn-primary">Submit</button>
+  </div>
 
-  </body>
+</body>
 </html>
