@@ -36,7 +36,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
           var playersLeft = playerCount - inputs.length;
           $('#playerCount').html("Building bracket...waiting for " + playersLeft + " player(s)");
           if (creator == "yes"){
-            $("#startGame").html("<button type='button' id='startnow' class='btn btn-primary'>Start Game Now</button>");
+            $("#startGame").html("<button type='button' id='startnow' class='btn'>Start Game Now</button>");
           }
           $("#startnow").on("click", function(){ 
             console.log(inputs.length);
