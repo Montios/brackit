@@ -11,6 +11,16 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       bracketData = object.get('bracket_data');
       current_round = object.get('furthest_round');
       var totalRounds = object.get("total_rounds");
+      if(current_round == totalRounds){
+        if (creator==="yes"){
+          alert("The game is over!");
+          window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
+        }
+        else {
+          alert("The game is over!");
+          window.location.href = "./bracket.html?bid="+ bid;
+        }
+      }
       buildTeamList(bracketData,current_round); 
       $("#title").append(object.get('category'));
     },
@@ -106,9 +116,11 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
           // Execute any logic that should take place after the object is saved.
          // alert('Object saved with objectId: ' + savedObject.id);
           if (creator==="yes"){
+            alert("Your vote(s) have been saved!");
             window.location.href = "./bracket.html?bid="+ bid + "&creator=yes";
           }
           else {
+            alert("Your vote(s) have been saved!");
             window.location.href = "./bracket.html?bid="+ bid;
           }
         },

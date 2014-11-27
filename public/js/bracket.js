@@ -320,6 +320,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     var data =[];
     var seed = 0; 
     var index = 0; 
+    var duplicate = false; 
     //run the while loop either until the bracket is full, or no more inputs
     while (data.length!=size && seed<inputs[0].length){
       //run through the highest seed of each player and add to data
@@ -333,12 +334,25 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         //create all the vote + i fields in the team object
         for (var i = 1; i<rounds; i++) {
           team['votes' + i] = 0; 
-          if(team['value']=="Byes"){
-            team['votes' + i] = -1; 
+          // if(team['value']=="Byes"){
+          //   team['votes' + i] = -1; 
+          // }
+        }
+
+        //check if the value already exists
+        for (var i = 0; i<data.length; i++){
+          if (data[i]['value'].toUpperCase() == team['value'].toUpperCase()){
+            duplicate = true; 
           }
         }
 
-        data.push(team);
+        //only push it to the data if its not a duplicate
+        if (!duplicate){
+          data.push(team);
+        }
+
+        //reset duplicate
+        duplicate=false; 
       }
       index++;
       if(index == players) {
@@ -463,29 +477,21 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     }
   });
 
-  // var bracketData = 
-  // [
-  //   [
-  //     [{"name":"pizza","id":0},{"name":"burritos","id":1}],
-  //     [{"name":"Chinese","id":2},{"name":"sushi","id":3}],
-  //     [{"name":"Korean","id":4},{"name":"burgers","id":5}],
-  //     [{"name":"pasta","id":6},{"name":"vegetarian","id":7}]
-  //   ],
-  //   [
-  //     [{"name":"To Be Determined","id":"tbd"},{"name":"To Be Determined","id":"tbd"}],
-  //     [{"name":"To Be Determined","id":"tbd"},{"name":"To Be Determined","id":"tbd"}]
-  //   ],
-  //   [
-  //     [{"name":"To Be Determined","id":"tbd"},{"name":"To Be Determined","id":"tbd"}]
-  //   ],
-  //   [
-  //     [{"name":"To Be Determined","id":"tbd"}]
-  //   ]
-  // ]
-  //     [{"name":"To Be Determined","id":"tbd"},{"name":"To Be Determined","id":"tbd"}]
-  //   ],
-  //   [
-  //     [{"name":"To Be Determined","id":"tbd"}]
-  //   ]
-  // ];
+  if(creator==="yes"){
+    //append the shareable link
+    $("#contain").append(
+      "<input id='share' onClick='this.setSelectionRange(0, this.value.length)'" +
+      " value='test-bracketgame.parseapp.com/build.html?bid=" + bid +"'></input>"
+      );
+    $("#contain").append(
+      "<button id='sendemail' class='btn btn-primary'>Send by Email</button>"
+      );
+    $("#sendemail").on('click', function(){
+      document.location.href = "mailto:?Subject=Join%20my%20BrackIt%20game!" + 
+      "&body=test-bracketgame.parseapp.com/build.html?bid=" + bid;
+    });
+  }
+
+
+
 });

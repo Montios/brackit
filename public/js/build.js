@@ -112,7 +112,8 @@ $(document).ready(function() {
             "<button id='sendemail' class='btn btn-primary'>Send by Email</button>"
             );
           $("#sendemail").on('click', function(){
-            document.location.href = "mailto:?Subject=Join%20my%20BrackIt%20game!";
+            document.location.href = "mailto:?Subject=Join%20my%20BrackIt%20game!" + 
+            "&body=test-bracketgame.parseapp.com/build.html?bid=" + bid;
           });
         }
       },
@@ -127,6 +128,7 @@ $(document).ready(function() {
     var data =[];
     var seed = 0; 
     var index = 0; 
+    var duplicate = false; 
     while (data.length!=size){
       //run through the highest seed of each player and add to data
       //then repeat with next seed
@@ -138,7 +140,22 @@ $(document).ready(function() {
       for (var i = 1; i<rounds; i++) {
         team['votes' + i] = 0; 
       }
-      data.push(team);
+
+      //check if the value already exists
+      for (var i = 0; i<data.length; i++){
+        if (data[i]['value'].toUpperCase() == team['value'].toUpperCase()){
+          duplicate = true; 
+        }
+      }
+
+      //only push it to the data if its not a duplicate
+      if (!duplicate){
+        data.push(team);
+      }
+
+      //reset duplicate
+      duplicate=false; 
+
       index++;
       if(index == players) {
         //if the index is the same as players, move to the next seed
