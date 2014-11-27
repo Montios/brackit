@@ -1,0 +1,111 @@
+<html>
+<head>
+  <title>My ParseApp site</title>
+  <style>
+  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js"></script>
+
+  <!-- ratchet files --> 
+  <link rel="stylesheet" href="./ratchet/css/ratchet.min.css">
+  <link rel="stylesheet" href="./ratchet/css/ratchet-theme-ios.min.css">
+  <script src="./ratchet/js/ratchet.min.js"></script>
+
+  <!-- include the js file --> 
+  <script type="text/javascript" src="./js/index.js"></script>
+  
+</head>
+<style type="text/css">
+  @import url(http://fonts.googleapis.com/css?family=Raleway:200,300,400,700,900);
+  h1{
+    color:white;
+    font-family: 'Raleway', Arial;
+    margin-left:25%;
+    letter-spacing: 3px;
+  }
+  header{
+    position: fixed;
+    width:100%;
+    background: -webkit-linear-gradient(left, rgb(109,109,119) , rgb(119,167,143)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, rgb(109,109,119) , rgb(119,167,143)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, rgb(109,109,119) , rgb(119,167,143)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, rgb(109,109,119) , rgb(119,167,143)); /* Standard syntax */
+
+  }
+  #category{
+    margin-top: 10%;
+    color:white;
+    width: 80%;
+    font-weight: bold;
+    border: none;
+    background: #6ae59f;
+    margin-left: 10%;
+    box-shadow: -3px 4px 2px -2px #888888;
+  }
+  #numPlayers{
+    margin-top: 3%;
+    width: 80%;
+    color:white;
+    border: none;
+    font-weight: bold;
+    background: #6ae59f;
+    margin-left: 10%;
+    box-shadow: -3px 4px 2px -2px #888888;
+  }
+  ::-webkit-input-placeholder { /* WebKit browsers */
+      color:    #fff;
+      text-align: center;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+     color:    #fff;
+     opacity:  1;
+     font-weight: bold;
+
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+     color:    #fff;
+     opacity:  1;
+     font-weight: bold;
+
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+     color:    #fff;
+     font-weight: bold;
+
+  }
+</style>
+<body>
+  <header class="bar bar-nav">
+      <h1>BRACK<i style="color:rgb(160,237,160);">it</i></h1>
+  </header>
+
+  <div class="content">
+
+      <input id="category" type="text" placeholder="CATEGORY" required>
+      <input id="numPlayers" type="text" placeholder="PLAYERS" required>
+
+    <div style="margin: 10px">
+      <div align = center>
+        <select style="box-shadow: -3px 4px 2px -2px #888888;border:none;width:200px; height:50px;background:#6ae59f;color:white;font-weight:bold;text-align:center;" size=1 id="bracketSize">
+          <option class="sizeOption" value="2" selected>BRACKET SIZE</option>
+          <option class="sizeOption" value="2">2 items</option>
+          <option class="sizeOption" value="4">4 items</option>
+          <option class="sizeOption" value="8">8 items</option>
+          <option class="sizeOption" value="16">16 items</option>
+          <option class="sizeOption" value="32">32 items</option>
+          <option class="sizeOption" value="64">64 items</option>
+        </select>
+      </div>
+    </div>
+
+    <button  style="left: 75%;margin-top:40%;border-radius:80%;background:#6ae59f;color:white;border:none;width:20%;height:15%;margin-right:5%;" id="submit" class="btn">  <span style="font-size:175%"class="icon icon-right-nav"></span>
+</button>
+
+  </div>
+
+</body>
+</html>

@@ -27,10 +27,15 @@
       margin-top:20px;
     }
     #sendemail{
+      margin-top: 3%;
+      color:white;
       height:50px;
-      width:80%;
-      margin-left:10%;
-      margin-top:20px;
+      width: 80%;
+      font-weight: bold;
+      border: none;
+      background: #6ae59f;
+      margin-left: 10%;
+      box-shadow: -3px 4px 2px -2px #888888;
     }
     #share {
       width:80%;
@@ -42,26 +47,36 @@
       height: auto !important;
       position: static !important; 
     }
-    .content
-    {
-      height: 100% !important;
-      position: static !important;
+    h1{
+      color:white;
+      font-family: 'Raleway', Arial;
+      margin-left:25%;
+      letter-spacing: 3px;
     }
+    header{
+      position: fixed;
+      width:100%;
+      background: -webkit-linear-gradient(left, rgb(109,109,119) , rgb(119,167,143)); /* For Safari 5.1 to 6.0 */
+      background: -o-linear-gradient(right, rgb(109,109,119) , rgb(119,167,143)); /* For Opera 11.1 to 12.0 */
+      background: -moz-linear-gradient(right, rgb(109,109,119) , rgb(119,167,143)); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(to right, rgb(109,109,119) , rgb(119,167,143)); /* Standard syntax */
 
+    }
   </style>
   
 </head>
 <body>
   <header class="bar bar-nav">
-    <a class="icon icon-refresh pull-right"></a>
-    <h1 id="categoryTitle" class="title"></h1>
+    <h1>BRACK<i style="color:rgb(160,237,160);">it</i></h1>
   </header>
   
 
   <div class="content">
     <form class="input-group" id="input_fields">
     </form>
-    <button id="addInputs" class="btn btn-primary">Submit</button>
+    <button  style="left: 75%;border-radius:80%;background:#6ae59f;color:white;border:none;width: 10%;
+height: 10%;margin-right:5%;" id="addInputs" class="btn">  <span style="font-size:175%"class="icon icon-right-nav"></span>
+
   </div>
 
 </body>

@@ -28,20 +28,27 @@
     <script type="text/javascript" src="jquery-countdown/jquery.countdown.js"></script>
 
     <style type="text/css">
-      .g_gracket { width: 9999px; background-color: #fff; padding: 55px 15px 5px; line-height: 100%; position: relative; overflow: hidden;}
+      @import url(http://fonts.googleapis.com/css?family=Raleway:200,300,400,700,900);
+      .g_gracket {background: rgb(243,242,239); margin-top: 50px; padding: 55px 15px 5px; line-height: 100%; position: relative; overflow: scroll;}
       .g_round { float: left; margin-right: 70px; }
-      .g_game { position: relative; margin-bottom: 15px; }
+      .g_game { position: relative; margin-bottom: 15px; border-bottom: solid 3px rgb(203,203,200);
+border-left: solid 2px rgb(203,203,200);}
       .g_gracket h3 { margin: 0; padding: 10px 8px 8px; font-size: 18px; font-weight: normal; color: #000000}
-      .g_team { background: #ffffff; border:solid 2px #99CCFF; border-bottom: solid 1px #99CCFF}
-      .g_team:last-child {  background: #ffffff; border:solid 2px #CCCCFF; border-top: solid 1px #CCCCFF}
+      .g_team { background: #ffffff; ; border-bottom: solid 1px rgb(203,203,200);}
+      .g_team:last-child {  background: #ffffff;}
       .g_round:last-child { margin-right: 20px; }
-      .g_winner { background:#CCCCFF; border:solid 2px #99CCFF;}
+      .g_winner { background:white;}
+      .g_winner h3{color:red;}
       .g_winner .g_team { background: none; }
       .g_current { cursor: pointer; background: #CCFFFF!important; }
-      .g_round_label { top: -5px; font-weight: normal; color: #CCC; text-align: center; font-size: 18px; }
+      .g_round_label { top: -5px; font-weight: normal; color: #CCC; text-align: center; font-size: 100%; }
       #title {
         margin-top:10px;
-        font-size:30px;
+        font-size:100%;
+        font-family: 'Raleway', Arial;
+        font-weight:200;
+        text-transform: uppercase;
+        color:white;
       }
       #startnow {
         height:50px;
@@ -51,6 +58,7 @@
       }
       body
       {
+        background: rgb(243,242,239);
       height: auto !important;
       position: static !important; 
       }
@@ -59,15 +67,26 @@
       height: 100% !important;
       position: static !important;
       }
+      header{
+        position: fixed;
+        width:100%;
+        background: -webkit-linear-gradient(left, rgb(80,76,90) , red); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(right, rgb(80,76,90) , red); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(right, rgb(80,76,90) , red); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(to right, rgb(80,76,90) , red); /* Standard syntax */
+
+      }
     </style>
 
   </head>
   <body>    
-    <p align="center" id="title"></p>
-    <div>
+  <header style="position:fixed;width:100%"class="bar bar-nav">
+    <p id="title"></p>
+  </header>
+    <div id="contain" style="width:100%;">
       <div id="playerCount" align="center"></div>
       <div id="startGame" align="center"></div>
-      <div id="timer"></div>
+      <div id="timer" style="margin-top:15%;"></div>
       <div class="my_gracket" align = "center"></div>
     </div>
 

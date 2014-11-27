@@ -17,36 +17,39 @@
 
   <!-- include the js file --> 
   <script type="text/javascript" src="./js/index.js"></script>
-  
+  <style type="text/css">
+  @import url(http://fonts.googleapis.com/css?family=Raleway:200,300,400,700,900);
+  #go{
+    background: -webkit-linear-gradient(left, rgb(80,76,90) , red); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, rgb(80,76,90) , red); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, rgb(80,76,90) , red); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, rgb(80,76,90) , red); /* Standard syntax */
+  }
+  .content{
+    background: -webkit-linear-gradient(left, rgb(109,109,119) , rgb(119,167,143)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, rgb(109,109,119) , rgb(119,167,143)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, rgb(109,109,119) , rgb(119,167,143)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, rgb(109,109,119) , rgb(119,167,143)); /* Standard syntax */
+  }
+  h1{
+    color:white;
+    margin-top:50%;
+    font-family: 'Raleway', Arial;
+    margin-left:25%;
+    letter-spacing: 3px;
+  }
+  </style>
 </head>
 <body>
-  <header class="bar bar-nav">
-    <h1 class="title">Select a category</h1>
-  </header>
 
   <div class="content">
-
-    <form class="input-group">
-      <input id="category" type="text" placeholder="Enter a category" required>
-      <input id="numPlayers" type="text" placeholder="Enter the number of players including yourself" required>
-    </form>
-
-    <div style="margin: 10px">
-      <p align="center">Bracket size</p>
-      <div align = center>
-        <select style="width:200px; height:50px" size=1 id="bracketSize">
-          <option class="sizeOption" value="2" selected>2 items</option>
-          <option class="sizeOption" value="4">4 items</option>
-          <option class="sizeOption" value="8">8 items</option>
-          <option class="sizeOption" value="16">16 items</option>
-          <option class="sizeOption" value="32">32 items</option>
-          <option class="sizeOption" value="64">64 items</option>
-        </select>
-      </div>
-    </div>
-
-    <button  style="height:50px;width:80%;margin-left:10%;height:" id="submit" class="btn btn-primary">Start!</button>
-
+    <h1>BRACK<i style="color:rgb(160,237,160);">it</i></h1>
+    <button style="height:50px;width:80%;margin-left:10%;margin-top:10%;" id="go" class="btn"><span style="text-transform:uppercase;font-size:100%;color:white;">Make Your Bracket!<span></button>
+    <script type="text/javascript">
+    $("#go").on('click', function(){
+      window.location.href = "./category.html";
+    });
+    </script>
   </div>
 
 </body>
