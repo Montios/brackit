@@ -95,13 +95,16 @@ $(document).ready(function() {
         }
         fieldsCount = Math.ceil(bracketSize/(0.75*playerCount));
         $('#categoryTitle').append(object.get('category'));
+        var input_fields= "";
         for (var i = 1; i<=fieldsCount; i++)
         {
           //create the appropriate number of input fields based on formula
-          $("#input_fields").append(
-            "<input id=" + i + " type='text' placeholder='Rank "+ i + "' required>"
-            )
+          // $("#input_fields").append(
+          //   "<input id=" + i + " type='text' placeholder='Rank "+ i + "''>"
+          //   );
+          input_fields +="<input id=" + i + " type='text' value='' placeholder='Rank "+ i + "''>"
         }
+        $("#input_fields").html(input_fields);
         if(creator==="yes"){
           //append the shareable link
           $(".content").append(

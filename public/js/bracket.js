@@ -479,11 +479,11 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
 
   if(creator==="yes"){
     //append the shareable link
-    $("#contain").append(
+    $("#gamelink").append(
       "<input id='share' onClick='this.setSelectionRange(0, this.value.length)'" +
       " value='test-bracketgame.parseapp.com/build.html?bid=" + bid +"'></input>"
       );
-    $("#contain").append(
+    $("#emailbutton").append(
       "<button id='sendemail' class='btn btn-primary'>Send by Email</button>"
       );
     $("#sendemail").on('click', function(){
