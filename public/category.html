@@ -45,6 +45,7 @@
     background: #6ae59f;
     margin-left: 10%;
     box-shadow: -3px 4px 2px -2px #888888;
+    font-size: 20px;
   }
   #numPlayers{
     margin-top: 3%;
@@ -55,11 +56,13 @@
     background: #6ae59f;
     margin-left: 10%;
     box-shadow: -3px 4px 2px -2px #888888;
+     font-size: 20px;
   }
   ::-webkit-input-placeholder { /* WebKit browsers */
       color:    #fff;
       text-align: center;
   }
+
   :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
      color:    #fff;
      opacity:  1;
@@ -77,6 +80,18 @@
      font-weight: bold;
 
   }
+  .selectStyle{
+    box-shadow: -3px 4px 2px -2px #888888;border:none;width:80%; height:50px;background:#6ae59f;color:white;font-weight:bold;text-align:-webkit-center;
+    text-indent: 43%;
+     font-size: 20px;
+  }
+@media only screen and (max-device-width: 480px) {
+    .selectStyle {
+        text-indent: 18%;
+
+    }
+}
+
 </style>
 <body>
   <header class="bar bar-nav">
@@ -85,13 +100,13 @@
 
   <div class="content">
 
-      <input id="category" type="text" placeholder="CATEGORY"  style = "height:50px !important" required>
+      <input id="category" type="text" placeholder="CATEGORY"  style = "height:50px; !important" required>
       <input id="numPlayers" type="text" placeholder="PLAYERS" style = "height:50px !important" required>
 
-    <div style="margin: 10px">
-      <div align = center>
-        <select style="box-shadow: -3px 4px 2px -2px #888888;border:none;width:200px; height:50px;background:#6ae59f;color:white;font-weight:bold;text-align:center;" size=1 id="bracketSize">
-          <option class="sizeOption" value="2" selected>BRACKET SIZE</option>
+    <div style = "margin-top: 3%;">
+      <div align = center > 
+        <select  class ="selectStyle" style="" size=1 id="bracketSize">
+          <option class="sizeOption" value="2" selected >BRACKET SIZE</option>
           <option class="sizeOption" value="2">2 items</option>
           <option class="sizeOption" value="4">4 items</option>
           <option class="sizeOption" value="8">8 items</option>
