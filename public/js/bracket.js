@@ -3,6 +3,8 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
   
   var bid = getUrlParameter("bid");
   var creator = getUrlParameter("creator");
+
+  var gameTitle; 
   pageLoadTasks();
 
   function pageLoadTasks() {
@@ -19,6 +21,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         var playerCount = object.get('playerCount');
         var endTime = object.get('end_round');
         var bracketSize = object.get('bracketSize');
+        gameTitle = object.get('category');
         $("#title").append(object.get('category'));
         var width = totalRounds*60
         if(width < 100){
@@ -57,7 +60,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
               object.set('bracket_data', data);
 
               var endTime = new Date();
-              endTime.setMinutes(endTime.getMinutes()+1);
+              endTime.setMinutes(endTime.getMinutes()+2);
               object.set('end_round',endTime);
 
               //save the new inputs
@@ -311,7 +314,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       if(currRound>=rounds){
         console.log("%%%%%%%%");
         $("#timer").attr('id','finished');
-        $("#finished").html("<h1 style='text-align:center;width:50%;'>GAME OVER</h1>");
+        $("#finished").html("<h1 style='text-align:center;width:50%;'>BrackIt Winner</h1>");
       }        
   }
 
@@ -446,7 +449,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
         var totalRounds = object.get("total_rounds");
         var results = calculateWinners(bracketData,totalRounds,currentRound); 
         var endTime = new Date();
-        endTime.setMinutes(endTime.getMinutes()+1);
+        endTime.setMinutes(endTime.getMinutes()+2);
         object.set("bracket_data", results);
         object.set("furthest_round", currentRound+1);
         object.set("end_round", endTime);
@@ -481,14 +484,14 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
     //append the shareable link
     $("#gamelink").append(
       "<input id='share' onClick='this.setSelectionRange(0, this.value.length)'" +
-      " value='test-bracketgame.parseapp.com/build.html?bid=" + bid +"'></input>"
+      " value='brackit.parseapp.com/build.html?bid=" + bid +"'></input>"
       );
     $("#emailbutton").append(
       "<button id='sendemail' class='btn btn-primary'>Send by Email</button>"
       );
     $("#sendemail").on('click', function(){
       document.location.href = "mailto:?Subject=Join%20my%20BrackIt%20game!" + 
-      "&body=test-bracketgame.parseapp.com/build.html?bid=" + bid;
+      "&body=" + gameTitle + "%0Abrackit.parseapp.com/build.html?bid=" + bid;
     });
   }
 
