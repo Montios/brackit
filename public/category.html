@@ -34,6 +34,7 @@
     background: -o-linear-gradient(right, rgb(109,109,119) , rgb(119,167,143)); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(right, rgb(109,109,119) , rgb(119,167,143)); /* For Firefox 3.6 to 15 */
     background: linear-gradient(to right, rgb(109,109,119) , rgb(119,167,143)); /* Standard syntax */
+    height: 12%!important;
 
   }
   #category{
@@ -56,54 +57,102 @@
     background: #6ae59f;
     margin-left: 10%;
     box-shadow: -3px 4px 2px -2px #888888;
-     font-size: 20px;
+    font-size: 20px;
   }
   ::-webkit-input-placeholder { /* WebKit browsers */
-      color:    #fff;
-      text-align: center;
+    color:    #fff;
+    text-align: center;
   }
 
   :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-     color:    #fff;
-     opacity:  1;
-     font-weight: bold;
+   color:    #fff;
+   opacity:  1;
+   font-weight: bold;
 
-  }
-  ::-moz-placeholder { /* Mozilla Firefox 19+ */
-     color:    #fff;
-     opacity:  1;
-     font-weight: bold;
+ }
+ ::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #fff;
+   opacity:  1;
+   font-weight: bold;
 
-  }
-  :-ms-input-placeholder { /* Internet Explorer 10+ */
-     color:    #fff;
-     font-weight: bold;
+ }
+ :-ms-input-placeholder { /* Internet Explorer 10+ */
+   color:    #fff;
+   font-weight: bold;
 
-  }
-  .selectStyle{
-    box-shadow: -3px 4px 2px -2px #888888;border:none;width:80%; height:50px;background:#6ae59f;color:white;font-weight:bold;text-align:-webkit-center;
-    text-indent: 43%;
-     font-size: 20px;
-  }
-@media only screen and (max-device-width: 480px) {
-    .selectStyle {
-        text-indent: 18%;
-
-    }
+ }
+ .selectStyle{
+  box-shadow: -3px 4px 2px -2px #888888;border:none;width:80%; height:50px;background:#6ae59f;color:white;font-weight:bold;text-align:-webkit-center;
+  text-indent: 43%;
+  font-size: 20px;
 }
+
+  .circleBtn{
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+    border: 1px solid #6ae59f;
+    color:white;
+    background:#6ae59f ;
+    left:80% ;
+    margin-top:6% ;
+    margin-right:5%;
+}
+.divMargin{
+    margin-top: 3%;
+}
+@media only screen and (max-device-width: 480px) {
+  .selectStyle {
+    text-indent: 18%;
+
+  }
+
+  .circleBtn{
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+    border: 1px solid #6ae59f;
+    color:white;
+    background:#6ae59f ;
+    left:65% ;
+    margin-top:20% ;
+    margin-right:20%;
+}
+#category{
+  margin-top: 20%;
+}
+#numPlayers{
+  margin-top: 10%;
+}
+.divMargin{
+    margin-top: 10%;
+}
+header{
+  height: 11% !important;
+ /* -webkit-transform: skew(-30deg); 
+  margin-left: -20px;*/
+}
+  .circleBtn{
+    height: 50px;
+    width: 50px;
+    left:74% ;
+  }
+}
+
 
 </style>
 <body>
+
   <header class="bar bar-nav">
-      <h1>BRACK<i style="color:rgb(160,237,160);">it</i></h1>
+    <h1>BRACK<i style="color:rgb(160,237,160);">it</i></h1>
   </header>
 
   <div class="content">
 
-      <input id="category" type="text" placeholder="CATEGORY"  style = "height:50px; !important" required>
-      <input id="numPlayers" type="text" placeholder="PLAYERS" style = "height:50px !important" required>
+    <input id="category" type="text" placeholder="CATEGORY"  style = "height:50px; !important" required>
+    <input id="numPlayers" type="text" placeholder="PLAYERS" style = "height:50px !important" required>
 
-    <div style = "margin-top: 3%;">
+    <div class ="divMargin">
       <div align = center > 
         <select  class ="selectStyle" style="" size=1 id="bracketSize">
           <option class="sizeOption" value="2" selected >BRACKET SIZE</option>
@@ -117,8 +166,8 @@
       </div>
     </div>
 
-    <button  style="left: 75%;margin-top:40%;border-radius:80%;background:#6ae59f;color:white;border:none;width:20%;height:15%;margin-right:5%;" id="submit" class="btn">  <span style="font-size:175%"class="icon icon-right-nav"></span>
-</button>
+    <button id="submit" class="btn circleBtn">  <span style="font-size:175%"class="icon icon-right-nav"></span>
+    </button>
 
   </div>
 

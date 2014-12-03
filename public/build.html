@@ -60,8 +60,59 @@
       background: -o-linear-gradient(right, rgb(109,109,119) , rgb(119,167,143)); /* For Opera 11.1 to 12.0 */
       background: -moz-linear-gradient(right, rgb(109,109,119) , rgb(119,167,143)); /* For Firefox 3.6 to 15 */
       background: linear-gradient(to right, rgb(109,109,119) , rgb(119,167,143)); /* Standard syntax */
-
+        height: 12% !important;
     }
+    .divMargin{
+    margin-top: 2%;
+}
+  .circleBtn{
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+    border: 1px solid #6ae59f;
+    color:white;
+    background:#6ae59f ;
+    left:80% ;
+    margin-top:6% ;
+    margin-right:5%;
+}
+@media only screen and (max-device-width: 480px) {
+  .selectStyle {
+    text-indent: 18%;
+
+  }
+
+  .circleBtn{
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+    border: 1px solid #6ae59f;
+    color:white;
+    background:#6ae59f ;
+    left:65% ;
+    margin-top:20% ;
+    margin-right:20%;
+}
+#category{
+  margin-top: 20%;
+}
+#numPlayers{
+  margin-top: 10%;
+}
+.divMargin{
+    margin-top: 4%;
+}
+header{
+  height: 10% !important;
+ /* -webkit-transform: skew(-30deg); 
+  margin-left: -20px;*/
+}
+  .circleBtn{
+    height: 50px;
+    width: 50px;
+    left:74% ;
+  }
+}
   </style>
   
 </head>
@@ -72,11 +123,11 @@
   
 
   <div class="content">
-    <form class="input-group" id="input_fields">
+    <form class="input-group divMargin" id="input_fields">
       <input id='00' type='text' value='' placeholder='Rank 1'>
     </form>
-    <button  style="left: 75%;border-radius:80%;background:#6ae59f;color:white;border:none;width: 10%;
-height: 10%;margin-right:5%;" id="addInputs" class="btn">  <span style="font-size:175%"class="icon icon-right-nav"></span>
+    <button id="submit" class="btn circleBtn">  <span style="font-size:175%"class="icon icon-right-nav"></span>
+
 
   </div>
 
