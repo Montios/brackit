@@ -83,6 +83,8 @@ $(document).ready(function() {
         var playerCount = object.get('playerCount');
         var bracketSize = object.get('bracketSize');
         var inputs = object.get('player_inputs');
+        var category = object.get('category');
+        $("#title").append(category);
         if(inputs!=undefined && playerCount<=inputs.length){
           alert("Players are no longer allowed to add teams!");
           if (creator==="yes"){
@@ -102,21 +104,21 @@ $(document).ready(function() {
           // $("#input_fields").append(
           //   "<input id=" + i + " type='text' placeholder='Rank "+ i + "''>"
           //   );
-          input_fields +="<input id=" + i + " type='text' value='' placeholder='Rank "+ i + "''>"
+          input_fields +="<input id=" + i + " type='text' value='' placeholder='Rank "+ i + "' required>";
         }
         $("#input_fields").html(input_fields);
         if(creator==="yes"){
           //append the shareable link
           $(".content").append(
             "<input id='share' onClick='this.setSelectionRange(0, this.value.length)'" +
-            " value='test-bracketgame.parseapp.com/build.html?bid=" + bid +"'></input>"
+            " value='brackit.parseapp.com/build.html?bid=" + bid +"'></input>"
             );
           $(".content").append(
             "<button id='sendemail' class='btn btn-primary'>Send by Email</button>"
             );
           $("#sendemail").on('click', function(){
             document.location.href = "mailto:?Subject=Join%20my%20BrackIt%20game!" + 
-            "&body=test-bracketgame.parseapp.com/build.html?bid=" + bid;
+            "&body=Game:%20" + category + "%0Abrackit.parseapp.com/build.html?bid=" + bid;
           });
         }
       },
