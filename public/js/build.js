@@ -118,7 +118,7 @@ $(document).ready(function() {
             );
           $("#sendemail").on('click', function(){
             document.location.href = "mailto:?Subject=Join%20my%20BrackIt%20game!" + 
-            "&body=" + category + "%0Abrackit.parseapp.com/build.html?bid=" + bid;
+            "&body=Game:%20" + category + "%0Abrackit.parseapp.com/build.html?bid=" + bid;
           });
         }
       },

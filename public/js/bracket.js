@@ -491,7 +491,7 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
       );
     $("#sendemail").on('click', function(){
       document.location.href = "mailto:?Subject=Join%20my%20BrackIt%20game!" + 
-      "&body=" + gameTitle + "%0Abrackit.parseapp.com/build.html?bid=" + bid;
+      "&body=Game:%20" + gameTitle + "%0Abrackit.parseapp.com/build.html?bid=" + bid;
     });
   }
 
