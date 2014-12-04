@@ -102,54 +102,50 @@ border-left: solid 2px rgb(203,203,200);}
       #playerCount {
         margin-top: 150px;
       }
+      #contain{
+        min-width: 800px !important;
+        overflow: scroll !important;
+      }
+      #startnow,  #share , #sendemail, #playerCount{
+      margin-left:100px;
+      width: 1000px;
+      }
+      @media only screen and (max-device-width: 480px) {
+        .divMargin{
+            margin-top: 10%;
+        }
+        header{
+          height: 11% !important;
+         /* -webkit-transform: skew(-30deg); 
+          margin-left: -20px;*/
+        }
+        .circleBtn{
+          height: 50px;
+          width: 50px;
+          left:74% ;
+        }
         #contain{
-    min-width: 800px !important;
-    overflow: scroll !important;
-  }
-    #startnow,  #share , #sendemail, #playerCount{
-    margin-left:100px;
-    width: 1000px;
+          min-width: 350px !important;
+          overflow: scroll !important;
+        }
 
-  }
-@media only screen and (max-device-width: 480px) {
+        #startnow,  #share , #sendemail{
+          margin-left:20px;
+          width: 280px;
+        }
 
-.divMargin{
-    margin-top: 10%;
-}
-header{
-  height: 11% !important;
- /* -webkit-transform: skew(-30deg); 
-  margin-left: -20px;*/
-}
-  .circleBtn{
-    height: 50px;
-    width: 50px;
-    left:74% ;
-  }
-  #contain{
-    min-width: 350px !important;
-    overflow: scroll !important;
-  }
-
-  #startnow,  #share , #sendemail{
-    margin-left:20px;
-    width: 280px;
-  }
-
-   #playerCount {
-    margin-top: 15%;
-    margin-left:2%;
-  }
-
-}
-
-
+         #playerCount {
+          margin-top: 15%;
+          margin-left:2%;
+        }
+      }
       #title{
         color:white;
         font-family: 'Raleway', Arial;
         margin-left:25%;
         letter-spacing: 2px;
         font-weight: bold;
+        font-size:14px;
       }
     </style>
 
