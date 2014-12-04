@@ -312,9 +312,26 @@ Parse.initialize("WSUgho0OtfVW9qimoeBAKW8qHKLAIs3SQqMs0HW6", "9ZmxN9S1vOOfTaL7lD
 
       //remove the timer
       if(currRound>=rounds){
-        console.log("%%%%%%%%");
+        var winner;
         $("#timer").attr('id','finished');
-        $("#finished").html("<h1 style='text-align:center;width:50%;'>BrackIt Winner</h1>");
+        var bracket = Parse.Object.extend("Brackets");
+        var query = new Parse.Query(bracket);
+        query.get(bid,{
+          success: function(object) {
+            var data = object.get('bracket_data');
+            for(var i =0; i < data.length; i++){
+              if (data[i]["round"]==rounds){
+                console.log("WINNER DETERMINED");
+                winner = data[i]["value"];
+                $("#finished").html("<h1 style='text-align:center;width:50%;'>" + winner + " wins!</h1>");
+              }
+            }
+          },
+          error: function(error) {
+            alert("Error: " + error.code + " " + error.message);
+          }
+        });
+        
       }        
   }
 
